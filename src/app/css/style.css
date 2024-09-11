@@ -1,0 +1,422 @@
+@font-face {
+  font-family: "DIN Next W1G";
+  src: url("../../app/fonts/DINNextW1G-Light.eot");
+  src: url("../../app/fonts/DINNextW1G-Light.eot?#iefix") format("embedded-opentype"),
+    url("../../app/fonts/DINNextW1G-Light.woff2") format("woff2"),
+    url("../../app/fonts/DINNextW1G-Light.woff") format("woff"),
+    url("../../app/fonts/DINNextW1G-Light.ttf") format("truetype"),
+    url("../../app/fonts/DINNextW1G-Light.svg#DINNextW1G-Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DIN Next W1G";
+  src: url("../../app/fonts/DINNextW1G-Medium.eot");
+  src: url("../../app/fonts/DINNextW1G-Medium.eot?#iefix") format("embedded-opentype"),
+    url("../../app/fonts/DINNextW1G-Medium.woff2") format("woff2"),
+    url("../../app/fonts/DINNextW1G-Medium.woff") format("woff"),
+    url("../../app/fonts/DINNextW1G-Medium.ttf") format("truetype"),
+    url("../../app/fonts/DINNextW1G-Medium.svg#DINNextW1G-Medium") format("svg");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DIN Next W1G";
+  src: url("../../app/fonts/DINNextW1G-Bold.eot");
+  src: url("../../app/fonts/DINNextW1G-Bold.eot?#iefix") format("embedded-opentype"),
+    url("../../app/fonts/DINNextW1G-Bold.woff2") format("woff2"),
+    url("../../app/fonts/DINNextW1G-Bold.woff") format("woff"),
+    url("../../app/fonts/DINNextW1G-Bold.ttf") format("truetype"),
+    url("../../app/fonts/DINNextW1G-Bold.svg#DINNextW1G-Bold") format("svg");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  src: url("../../app/fonts/AvenirLTStd-Book.eot");
+  src: url("../../app/fonts/AvenirLTStd-Book.eot?#iefix") format("embedded-opentype"),
+    url("../../app/fonts/AvenirLTStd-Book.woff2") format("woff2"),
+    url("../../app/fonts/AvenirLTStd-Book.woff") format("woff"),
+    url("../../app/fonts/AvenirLTStd-Book.ttf") format("truetype"),
+    url("../../app/fonts/AvenirLTStd-Book.svg#AvenirLTStd-Book") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: "DIN Next W1G";
+  font-size: 18px;
+  color: #464747;
+}
+
+header li .nav-link {
+  font-family: "Avenir LT Std";
+  color: #464747;
+  transition: 0.3s all;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.checkout-btn {
+  margin: 0px 15px;
+}
+.custom-btn {
+  background: #3d9be9;
+  padding: 8px 20px !important;
+  border-radius: 40px;
+  color: #fff !important;
+  transition: 0.3s all;
+  display: inline-block;
+}
+.custom-btn:hover {
+  background: #464747;
+}
+header {
+  padding: 20px 0px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+}
+h1 {
+  font-size: 65px;
+  line-height: 100%;
+}
+h2 {
+  font-size: 55px;
+  line-height: 100%;
+}
+h3 {
+  font-size: 45px;
+  line-height: 100%;
+}
+h4 {
+  font-size: 35px;
+  line-height: 100%;
+}
+.locations-sec {
+  padding: 70px 0px;
+  background: url(../../../public/images/ground.png) 0 0 no-repeat;
+  background-size: cover;
+}
+.hr-line {
+  max-width: 70px;
+  border: 2px solid #3d9be9;
+  border-radius: 10px;
+  margin: 20px auto 30px;
+  opacity: 1;
+}
+.max-width-850 {
+  max-width: 850px;
+  margin: 0 auto;
+}
+.price-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 7px rgb(204 204 204 / 32%);
+}
+.price-box h4 {
+  font-family: "DIN Next W1G";
+}
+.price-main {
+  font-family: "DIN Next W1G";
+  font-weight: bold;
+  margin: 25px 0px;
+  position: relative;
+  display: inline-flex;
+  gap: 10px;
+  align-items: start;
+}
+.price-main span {
+  font-size: 25px;
+  color: #3d9be9;
+  line-height: 140%;
+}
+.buy-btn {
+  padding: 10px 40px !important;
+  margin-top: 10px !important;
+  display: inline-block;
+}
+a {
+  text-decoration: none;
+}
+p {
+  line-height: 1.3em;
+}
+.line-grey {
+  margin: 70px 0px;
+  opacity: 0.2;
+}
+.cart-btn-outer {
+  display: flex;
+  gap: 20px;
+  justify-content: end;
+}
+.form-check {
+  display: block;
+  min-height: 1.5rem;
+  padding-left: 1.5em;
+  margin-bottom: 0.125rem;
+  display: flex;
+  gap: 40px;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.form-check .form-check-input {
+  width: 27px;
+  height: 27px;
+}
+.form-check .form-check-label {
+  position: relative;
+  top: 3px;
+}
+.left-line {
+  margin-left: 0;
+}
+
+.input11 input {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+}
+.input11 input + span {
+  background: #fff;
+  background-size: 100%;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border-radius: 30px;
+}
+.input11 input:checked + span {
+  background: url(../../../public/images/check.png) 0 0 no-repeat;
+  background-size: 100%;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border-radius: 30px;
+}
+.images-main {
+  position: relative;
+}
+.input11 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+}
+.form-check-input:checked {
+  background-color: #3d9be9;
+  border-color: #3d9be9;
+}
+.images-main img {
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.row-marg .col-md-4 {
+  margin-bottom: 1.5rem;
+}
+.images-main:after {
+  content: "";
+  background: linear-gradient(to bottom, rgb(0 0 0 / 51%) 0%, rgb(255 255 255 / 0%) 100%);
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.navbar-nav {
+  flex-direction: row;
+  align-items: center;
+}
+
+header .container {
+  padding: 0px;
+}
+
+/* 27-08-2024 */
+.manage-banner-sec .edit-btn-row {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.delete-btn .custom-btn {
+  background: #bd1616;
+}
+.delete-btn .custom-btn:hover {
+  background: #972626;
+}
+.manage-banner-sec {
+  max-width: 600px;
+}
+.manage-banner-sec img {
+  height: 350px;
+  object-fit: cover;
+}
+.edit-btn-row i {
+  font-size: 15px;
+}
+select.form-select {
+  outline: none !important;
+  border: 1px solid #464747 !important;
+  border-radius: 5px;
+  padding: 15px 20px;
+}
+.post-form .form-label {
+  font-size: 18px;
+}
+.layer-container {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 0;
+}
+.layer-container {
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  gap: 15px;
+  margin: 0;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.layer-container input[type="checkbox"][id^="cb"] {
+  display: none;
+}
+
+.layer-container label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  height: 120px;
+  width: 120px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.layer-container label span.sequence-number {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  z-index: 2; /* Ensure it is above other elements */
+}
+
+.layer-container label img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.layer-container input[type="checkbox"]:checked + label {
+  transform: scale(1.05);
+  border: 2px solid red;
+}
+
+.layer-container input[type="checkbox"]:checked + label::after {
+  content: "âœ“"; /* Checkmark character */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: green;
+  background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 1199px) {
+  h2 {
+    font-size: 45px;
+  }
+  h3 {
+    font-size: 35px;
+  }
+  h4 {
+    font-size: 25px;
+  }
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm {
+    max-width: 95%;
+  }
+  .line-grey {
+    margin: 30px 0px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .locations-sec .col-lg-5 {
+    margin: 10px 0px;
+  }
+  .locations-sec {
+    padding: 30px 0px;
+  }
+  header {
+    padding: 10px 0px;
+  }
+  h2 {
+    font-size: 40px;
+  }
+  h3 {
+    font-size: 30px;
+  }
+  h4 {
+    font-size: 20px;
+  }
+  .price-main {
+    margin: 15px 0px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .checkout-btn {
+    margin: 0px 5px;
+  }
+  header li .nav-link {
+    font-size: 10px;
+  }
+  .navbar-brand img {
+    max-width: 100px;
+  }
+}
