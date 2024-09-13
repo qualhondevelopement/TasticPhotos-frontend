@@ -1,9 +1,11 @@
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Navigation, Pagination } from "swiper/modules";
 
 type Plan = {
   id: string;
@@ -17,6 +19,7 @@ type PlansProps = {
 
 const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
   const [data, setData] = useState<Plan[]>();
+
   useEffect(() => {
     const fetchPlans = async () => {
       try {
@@ -31,31 +34,7 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
 
     fetchPlans();
   }, []);
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3, // Show 3 cards at a time
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
+
   return (
     <div className="row justify-content-center">
       <div className="col-md-12">
@@ -71,13 +50,28 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
       </div>
 
       {data && data.length > 2 ? (
-        <Slider {...settings}>
+        <Swiper
+          slidesPerView={3}
+          spaceBetween={30}
+          pagination={{
+            clickable: true,
+          }}
+          navigation={true}
+          breakpoints={{
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            },
+            768: {
+              slidesPerView: 1,
+              spaceBetween: 20,
+            },
+          }}
+          modules={[Pagination, Navigation]}
+        >
           {data.map((plan) => (
-            <div key={plan.id} className="col-lg-5 col-md-6 ">
-              <div
-                className="price-box text-center"
-                style={{ marginRight: "15px" }}
-              >
+            <SwiperSlide key={plan.id} className="col-lg-5 col-md-6">
+              <div className="price-box text-center" style={{ height: "350px" }}>
                 <h4>{plan.plan_name}</h4>
                 <h2 className="price-main">
                   <span>$</span>
@@ -88,9 +82,9 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
                   Buy Now
                 </a>
               </div>
-            </div>
+            </SwiperSlide>
           ))}
-        </Slider>
+        </Swiper>
       ) : (
         data?.map((plan) => (
           <div className="col-lg-5 col-md-6" key={plan.id}>
@@ -111,4 +105,5 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
     </div>
   );
 };
+
 export default Plans;

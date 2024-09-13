@@ -420,3 +420,13 @@ select.form-select {
     max-width: 100px;
   }
 }
+.slick-prev:hover:before,
+.slick-prev:focus:before,
+.slick-next:hover:before,
+.slick-next:focus:before {
+  opacity: 1;
+  color: #3d9be9;
+  size: 35px;
+}
+
+

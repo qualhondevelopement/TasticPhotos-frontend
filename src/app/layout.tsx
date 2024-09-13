@@ -46,8 +46,8 @@ export default function RootLayout({
         />
       </Head>
       <body>
-        <InstallBootStrap />
-        {children}
+          <InstallBootStrap />
+          {children}
       </body>
     </html>
   );
