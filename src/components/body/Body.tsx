@@ -1,17 +1,44 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ImageCard from "./imageType/ImageCard";
 import Plans from "./plans/Plans";
+import axios from "axios";
 
-const Body = () => {
+interface BodyProps {
+  slug: any;
+}
+const Body: React.FC<BodyProps> = ({ slug }) => {
   const scrollTargetRef = useRef<HTMLDivElement>(null);
+
+  const [locationName, setLocationName] = useState<any>([]);
 
   const handleScroll = () => {
     if (scrollTargetRef.current) {
       scrollTargetRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const locationData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-gallery/?qr_id=${slug}`
+      );
+      setLocationName(response.data.data);
+    } catch (err) {
+      console.log("not fetcghhed");
+    }
+  };
+  useEffect(() => {
+    locationData();
+  }, []);
+
+  console.log(
+    locationName.map((data: any) => {
+      return data; // Explicitly return the name field
+    })
+  );
+
   return (
     <div>
       <section className="locations-sec">
@@ -28,7 +55,10 @@ const Body = () => {
                     value=""
                     id="flexCheckChecked"
                   />
-                  <label className="form-check-label" htmlFor="flexCheckChecked">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexCheckChecked"
+                  >
                     Select all
                   </label>
                 </div>
@@ -39,14 +69,19 @@ const Body = () => {
                 </div>
               </div>
             </div>
+            {locationName?.map((locationData: any, index: any) => (
+              <ImageCard
+                key={index}
+                title={locationData.name}
+                data={locationData.data}
+              />
+            ))}
 
-            <ImageCard title={"Park Entrance"} />
-
-            <hr className="line-grey" />
+            {/* <hr className="line-grey" />
             <ImageCard title={"Dolphin Exhibit"} />
 
             <hr className="line-grey" />
-            <ImageCard title={"Chimpanzee Exhibit"} />
+            <ImageCard title={"Chimpanzee Exhibit"} /> */}
 
             <div className="col-md-12">
               <div className="cart-btn-outer">

@@ -71,7 +71,7 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
         >
           {data.map((plan) => (
             <SwiperSlide key={plan.id} className="col-lg-5 col-md-6">
-              <div className="price-box text-center" style={{ height: "350px" }}>
+              <div className="price-box text-center" >
                 <h4>{plan.plan_name}</h4>
                 <h2 className="price-main">
                   <span>$</span>

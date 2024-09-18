@@ -23,8 +23,6 @@ const ImageItem: React.FC<ImageItemProps> = ({ src }) => (
 );
 
 const ImageCard: React.FC<ImageCardProps> = ({ title, data }) => {
-  console.log(data);
-
   return (
     <div>
       <div className="col-md-12">
@@ -34,7 +32,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ title, data }) => {
         </div>
         <div className="row row-marg">
           {data &&
-            Object.values(data).map((src, index) => (
+            Object.values(data).map((src: string, index: number) => (
               <ImageItem key={index} src={src} />
             ))}
         </div>

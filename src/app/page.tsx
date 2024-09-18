@@ -1,15 +1,14 @@
 "use client";
-import Banner from "@/components/banner/Banner";
-import Body from "@/components/body/Body";
-import Header from "@/components/header/Header";
-import Image from "next/image";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div>
-      <Header />
-      <Banner />
-      <Body />
-    </div>
-  );
+  const router = useRouter();
+  const slug = "dgheryerk6_w235cb.cxn_23";
+  useEffect(() => {
+    router.push(`/${slug}`);
+  }, [router]);
+
+  return null;
 }
