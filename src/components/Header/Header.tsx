@@ -1,6 +1,20 @@
 import React from "react";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
-const Header = () => {
+interface HeaderProps {}
+
+const Header: React.FC<HeaderProps> = () => {
+  const router = useRouter();
+  const currentSlug = useSelector((state: any) => state.slug.currentSlug);
+
+  const handleCartButton = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    event.preventDefault(); // Prevent the default anchor link behavior
+    router.push(`/cart-items/${currentSlug}`); // Push to the correct URL
+  };
+
   return (
     <div>
       <header>
@@ -9,8 +23,8 @@ const Header = () => {
             <div className="container">
               <div className="row align-items-center">
                 <div className="col-4 col-lg-4">
-                  <a className="navbar-brand" href="#">
-                    <img src="images/logo.png" />
+                  <a className="navbar-brand" href="/">
+                    <img src="images/logo.png" alt="Logo" />
                   </a>
                 </div>
                 <div className="col-8">
@@ -27,9 +41,12 @@ const Header = () => {
                         </a>
                       </li>
                       <li className="nav-item signup-btn">
-                        <a className="nav-link" href="#">
-                          {" "}
-                          <img src="images/cart.svg" />
+                        <a
+                          className="nav-link"
+                          href="#"
+                          onClick={handleCartButton}
+                        >
+                          <img src="images/cart.svg" alt="Cart" />
                         </a>
                       </li>
                     </ul>

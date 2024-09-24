@@ -1,8 +1,7 @@
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Loader from "../utils/loader/Loader";
-
+import "./style.css";
 const Banner = () => {
   const [bannerImage, setBannerImage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
@@ -26,12 +25,10 @@ const Banner = () => {
 
   return (
     <section className="banner-sec">
-      {bannerImage ? (
-        <img src={bannerImage} alt="Banner" className="w-100" />
+      {loading ? (
+        <div className="skeleton"></div>
       ) : (
-        <div className="banner-sec w-100">
-          <Loader />
-        </div>
+        <img src={bannerImage} alt="Banner" className="w-100" />
       )}
     </section>
   );

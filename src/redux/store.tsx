@@ -1,15 +1,9 @@
-"use client"
+"use client";
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from "../redux/cartSlice";
+import slugReducer from "./slugSlice"; // Create this file next
 
 export const store = configureStore({
   reducer: {
-    cart: cartReducer,
+    slug: slugReducer,
   },
 });
-
-// Define the RootState type
-export type RootState = ReturnType<typeof store.getState>;
-
-// Define the AppDispatch type
-export type AppDispatch = typeof store.dispatch;
