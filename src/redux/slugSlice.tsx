@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const slugSlice = createSlice({
   name: "slug",
   initialState: {
-    currentSlug: "",
+    currentSlug: null,
   },
   reducers: {
     setSlug: (state, action) => {

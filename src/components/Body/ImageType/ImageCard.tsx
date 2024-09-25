@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import { Navigation, Pagination, Scrollbar, A11y, Grid } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+
 
 // Import Swiper styles
 import "swiper/css";
@@ -39,7 +38,7 @@ const ImageCard: React.FC<ImageCardProps> = ({
           <h3>{title}</h3>
           <hr className="hr-line left-line" />
         </div>
-        <div className="row row-marg slider-container">
+        <div className="row row-marg ">
           {data &&
             Object.entries(data).map(
               ([id, src]: [string, string], index: number) => (

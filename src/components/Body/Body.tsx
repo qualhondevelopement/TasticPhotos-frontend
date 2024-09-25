@@ -5,28 +5,46 @@ import ImageCard from "./ImageType/ImageCard";
 import Plans from "./plans/Plans";
 import axios from "axios";
 import { setCartData } from "@/redux/cartSlice";
-
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
 interface BodyProps {}
+
 const Body: React.FC<BodyProps> = () => {
   const scrollTargetRef = useRef<HTMLDivElement>(null);
-  const [locationName, setLocationName] = useState<any>([]);
+  const [locationName, setLocationName] = useState<any[]>([]);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
-  const id = useSelector((state: any) => state.slug.currentSlug);
-
-  const allCartData = useSelector((state: any) => state.cart.cartData);
-
+  const [allCartData, setAllCartData] = useState<any>(null);
   const dispatch = useDispatch();
 
-  const handleScroll = () => {
-    if (scrollTargetRef.current) {
-      scrollTargetRef.current.scrollIntoView({ behavior: "smooth" });
+  const id = useSelector((state: any) => state.slug.currentSlug);
+
+  useEffect(() => {
+    if (id) {
+      fetchCartData();
+      fetchLocationData();
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (allCartData?.photos) {
+      const imageIds = allCartData.photos.map((photo: any) => photo.photo_id);
+      setSelectedImages(imageIds);
+    }
+  }, [allCartData]);
+
+  const fetchCartData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/?qr_id=${id}`
+      );
+      setAllCartData(response.data.data);
+    } catch (err) {
+      console.error("Error fetching cart data:", err);
     }
   };
 
-  const locationData = async () => {
+  const fetchLocationData = async () => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-gallery/?qr_id=${id}`
@@ -37,19 +55,9 @@ const Body: React.FC<BodyProps> = () => {
     }
   };
 
-    useEffect(() => {
-      if (allCartData?.photos) {
-        const imageIds = allCartData.photos.map((photo: any) => photo.photo_id);
-        setSelectedImages(imageIds);
-      }
-    }, [allCartData]);
-
-
-  useEffect(() => {
-    if (id) {
-      locationData();
-    }
-  }, [id, selectedImages]);
+  const handleScroll = () => {
+    scrollTargetRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const handleSelectImage = (imageId: string, isChecked: boolean) => {
     setSelectedImages((prev) =>
@@ -57,13 +65,11 @@ const Body: React.FC<BodyProps> = () => {
     );
   };
 
-  // Select or Deselect all images
   const handleSelectAll = (isChecked: boolean) => {
     if (isChecked) {
-      const allImageIds = locationName.flatMap((loc: { data: any }) => {
-        return Object.keys(loc.data);
-      });
-      console.log(allImageIds);
+      const allImageIds = locationName.flatMap((loc: { data: any }) =>
+        Object.keys(loc.data)
+      );
       setSelectedImages(allImageIds);
       toast.success("All Images Selected");
     } else {
@@ -71,39 +77,48 @@ const Body: React.FC<BodyProps> = () => {
     }
   };
 
-  const handleAddCart = () => {
-    if (selectedImages.length > 0) {
-      console.log("Selected Images:", selectedImages);
+  const handleAddCart = async () => {
+    if (selectedImages.length === 0) {
+      toast.error("No images selected");
+      return;
+    }
 
-      if (allCartData?.photos?.length === 0) {
-        console.log("No items in cart");
-      } else {
-        axios
-          .put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/`, {
-            qr_id: id,
-            photos: selectedImages,
-          })
-          .then((response) => {
-            dispatch(setCartData(response.data.data));
+    try {
+      const cartData = {
+        qr_id: id,
+        photos: selectedImages,
+      };
 
-            console.log("Cart updated successfully", response.data);
-
-            toast.success("Cart updated successfully");
-          })
-          .catch((error) => {
-            console.error("Error updating cart", error);
-            toast.error("Error updating cart");
-          });
+      // Try PUT request first
+      let response;
+      try {
+        response = await axios.put(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/`,
+          cartData
+        );
+      } catch (error: any) {
+        if (error.response && error.response.status === 400) {
+          response = await axios.post(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/`,
+            cartData
+          );
+        } else {
+          throw error;
+        }
       }
-    } else {
-      console.log("No images selected");
+
+      dispatch(setCartData(response.data.data));
+      toast.success("Cart updated successfully");
+    } catch (error) {
+      console.error("Error updating cart:", error);
+      toast.error("Failed to update cart");
     }
   };
 
   return (
     <div>
       <section className="locations-sec">
-        <div className="container">
+        <div className="container ">
           <Plans handleScroll={handleScroll} />
           <hr className="line-grey" />
           <div className="row">
@@ -150,7 +165,7 @@ const Body: React.FC<BodyProps> = () => {
             <div className="col-md-12">
               <div className="cart-btn-outer">
                 <div className="btn-cart mt-2">
-                  <a href="#" className="custom-btn">
+                  <a href="#" className="custom-btn" onClick={handleAddCart}>
                     Add to cart
                   </a>
                 </div>
