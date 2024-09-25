@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Navigation, Pagination, Scrollbar, A11y, Grid } from "swiper/modules";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -14,17 +13,25 @@ type ImageCardProps = {
   title: string;
   data: { [key: string]: string } | undefined;
   onSelectImage: (src: string, isChecked: boolean) => void;
+  selectedImages: string[];
 };
-
-
 
 const ImageCard: React.FC<ImageCardProps> = ({
   title,
   data,
   onSelectImage,
+  selectedImages,
 }) => {
-  //console.log(data);
-
+  const settings = {
+    className: "center",
+    centerMode: true,
+    infinite: true,
+    centerPadding: "60px",
+    slidesToShow: 3,
+    speed: 500,
+    rows: 2,
+    slidesPerRow: 2,
+  };
   return (
     <div>
       <div className="col-md-12">
@@ -32,7 +39,7 @@ const ImageCard: React.FC<ImageCardProps> = ({
           <h3>{title}</h3>
           <hr className="hr-line left-line" />
         </div>
-        <div className="row row-marg">
+        <div className="row row-marg slider-container">
           {data &&
             Object.entries(data).map(
               ([id, src]: [string, string], index: number) => (
@@ -42,7 +49,8 @@ const ImageCard: React.FC<ImageCardProps> = ({
                     <div className="input11">
                       <input
                         type="checkbox"
-                        onChange={(e) => onSelectImage(id, e.target.checked)} 
+                        checked={selectedImages.includes(id)}
+                        onChange={(e) => onSelectImage(id, e.target.checked)}
                       />
                       <span></span>
                     </div>

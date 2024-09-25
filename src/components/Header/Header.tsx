@@ -1,19 +1,30 @@
+"use client";
+
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {} from "@/redux/cartSlice";
+import Image from "next/image";
+import "./header.css";
 
 interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = () => {
   const router = useRouter();
   const currentSlug = useSelector((state: any) => state.slug.currentSlug);
-
+  const dispatch = useDispatch();
+  const cartItemsCount = useSelector(
+    (state: any) => state.cart.cartData?.photos.length
+  );
+  console.log(cartItemsCount, "count");
   const handleCartButton = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
-    event.preventDefault(); // Prevent the default anchor link behavior
-    router.push(`/cart-items/${currentSlug}`); // Push to the correct URL
+    event.preventDefault();
+    router.push(`/cart-items/${currentSlug}`);
   };
+  console.log(currentSlug, "current");
 
   return (
     <div>
@@ -24,7 +35,12 @@ const Header: React.FC<HeaderProps> = () => {
               <div className="row align-items-center">
                 <div className="col-4 col-lg-4">
                   <a className="navbar-brand" href="/">
-                    <img src="images/logo.png" alt="Logo" />
+                    <Image
+                      src="/images/logo.png"
+                      alt="Logo"
+                      width={150}
+                      height={50}
+                    />
                   </a>
                 </div>
                 <div className="col-8">
@@ -40,13 +56,28 @@ const Header: React.FC<HeaderProps> = () => {
                           Checkout
                         </a>
                       </li>
-                      <li className="nav-item signup-btn">
+                      <li
+                        className="nav-item signup-btn"
+                        style={{ position: "relative" }}
+                      >
                         <a
                           className="nav-link"
                           href="#"
                           onClick={handleCartButton}
                         >
-                          <img src="images/cart.svg" alt="Cart" />
+                          <Image
+                            src="/images/cart.svg"
+                            alt="Cart"
+                            width={40} // Specify the width of your SVG
+                            height={25} // Specify the height of your SVG
+                            style={{ position: "relative" }}
+                          />
+                          {/* Badge for showing the number of items */}
+                          {cartItemsCount > 0 && (
+                            <span className="cart-item-no">
+                              {cartItemsCount}
+                            </span>
+                          )}
                         </a>
                       </li>
                     </ul>

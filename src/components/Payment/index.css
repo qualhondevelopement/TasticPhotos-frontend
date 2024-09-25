@@ -1,0 +1,23 @@
+.payment-success-content {
+  text-align: center;
+}
+
+.checkmark-circle {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background-color: #dff0d8;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+p {
+  color: #6c757d;
+}

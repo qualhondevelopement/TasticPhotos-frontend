@@ -1,0 +1,11 @@
+.cart-item-no {
+  position: absolute;
+  top: -5px;
+  right: -4px;
+  background-color: #ff3e6c;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+}

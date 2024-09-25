@@ -1,4 +1,3 @@
-"use client"
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -7,14 +6,14 @@ import "./css/bootstrap.min.css";
 import "./css/style.css";
 import InstallBootStrap from "@/components/utils/InstallBootStrap";
 import Head from "next/head";
-import { Provider } from "react-redux";
-import { store } from "@/redux/store";
+import StoreProvider from "./StoreProvider";
+import Header from "@/components/Header/Header";
+import { Toaster } from "react-hot-toast";
 
-
-// export const metadata: Metadata = {
-//   title: "Gallery",
-//   description: "Gallery apk",
-// };
+export const metadata: Metadata = {
+  title: "Gallery",
+  description: "Gallery apk",
+};
 
 export default function RootLayout({
   children,
@@ -43,10 +42,13 @@ export default function RootLayout({
         />
       </Head>
       <body>
-        <Provider store={store}>
+        <StoreProvider>
+          <Toaster position="top-center" />
+
           <InstallBootStrap />
+          <Header />
           {children}
-        </Provider>
+        </StoreProvider>
       </body>
     </html>
   );

@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter();
   const slug = "dgheryerk6_w235cb.cxn_23";
   useEffect(() => {
-    router.push(`/${slug}`);
+    router.push(`/`);
   }, [router]);
 
   return null;
