@@ -17,7 +17,7 @@ const CartItems: React.FC<CartItemsProps> = () => {
 
   const dispatch = useDispatch();
   const stripe = useStripe();
-  //const isloading = useSelector((state: any) => state.loading);
+  const isloading = useSelector((state: any) => state.loading);
 
   const currentSlug = useSelector((state: any) => state.slug.currentSlug);
   const cartData = useSelector((state: any) => state.cart.cartData);
@@ -30,6 +30,7 @@ const CartItems: React.FC<CartItemsProps> = () => {
       console.log("cartdata", cartData);
       setCartItems(cartData);
     }
+    console.log("cartitem",isloading)
     dispatch(setLoading(false));
   }, [cartData, dispatch]);
 
@@ -49,7 +50,8 @@ const CartItems: React.FC<CartItemsProps> = () => {
       console.error("Payment failed", error);
     }
   };
-
+  
+console.log(cartItems,"cartitems")
   return (
     <>
       <div>
@@ -109,7 +111,7 @@ const CartItems: React.FC<CartItemsProps> = () => {
             </section>
           </>
         ) : (
-          cartItems && <EmptyCart />
+          (cartItems && cartItems==null  ) && <EmptyCart />
         )}
       </div>
     </>
