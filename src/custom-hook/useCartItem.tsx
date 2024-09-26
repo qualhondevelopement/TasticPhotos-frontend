@@ -1,17 +1,13 @@
-"use client";
-import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+// useCartItem.ts
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import axios from "axios";
 
 const useCartItem = () => {
   const [cartData, setCartData] = useState<any>(null);
   const pathname = usePathname();
   const id = pathname.split("/").pop();
-  const router = useRouter();
-  // if (!id || null) {
-  //   router.push("/not-found");
-  //   return;
-  // }
+
   useEffect(() => {
     if (id) {
       fetchCartItemData(id);

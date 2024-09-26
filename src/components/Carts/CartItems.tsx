@@ -1,3 +1,4 @@
+"use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useStripe, Elements } from "@stripe/react-stripe-js";
@@ -5,27 +6,32 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useSelector, useDispatch } from "react-redux";
 import EmptyCart from "./EmptyCart";
 import "./cartItem.css";
+import { setLoading } from "@/redux/loadingSlice";
 
 interface CartItemsProps {}
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string);
 
 const CartItems: React.FC<CartItemsProps> = () => {
-  const [cartItems, setCartItems] = useState<any>({});
+  const [cartItems, setCartItems] = useState<any>(null);
+
+  const dispatch = useDispatch();
+  const stripe = useStripe();
+  //const isloading = useSelector((state: any) => state.loading);
+
   const currentSlug = useSelector((state: any) => state.slug.currentSlug);
   const cartData = useSelector((state: any) => state.cart.cartData);
   console.log("cartslug", currentSlug);
-  const stripe = useStripe();
   const paymentId = currentSlug;
 
   useEffect(() => {
+    dispatch(setLoading(true));
     if (cartData && cartData.photos) {
       console.log("cartdata", cartData);
       setCartItems(cartData);
-    } else {
-      setCartItems({ photos: [], amount: 0 });
     }
-  }, [cartData]);
+    dispatch(setLoading(false));
+  }, [cartData, dispatch]);
 
   const handlePayment = async () => {
     const paymentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/payments/create-checkout-session/?qr_id=${paymentId}`;
@@ -47,7 +53,7 @@ const CartItems: React.FC<CartItemsProps> = () => {
   return (
     <>
       <div>
-        {cartItems?.photos?.length > 0 ? (
+        {cartItems && cartItems.photos && cartItems.photos.length > 0 ? (
           <>
             <section className="cart-banner">
               <h3 className="text-white ">Shopping Cart</h3>
@@ -87,14 +93,14 @@ const CartItems: React.FC<CartItemsProps> = () => {
                         </div>
                         <div className="d-flex justify-content-between border-top pt-3">
                           <div>TOTAL PRICE</div>
-                          <div>{cartItems?.amount}</div>
+                          <div>{cartItems?.amount} $</div>
                         </div>
-                        <button
-                          className="btn custom-btn  mt-3"
-                          onClick={handlePayment}
-                        >
-                          CHECKOUT
-                        </button>
+
+                        <div className="d-flex justify-content-center mt-3">
+                          <a className="custom-btn" onClick={handlePayment}>
+                            CHECKOUT
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -103,7 +109,7 @@ const CartItems: React.FC<CartItemsProps> = () => {
             </section>
           </>
         ) : (
-          <EmptyCart />
+          cartItems && <EmptyCart />
         )}
       </div>
     </>

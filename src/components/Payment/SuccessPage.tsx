@@ -31,12 +31,11 @@ const PaymentSuccess = () => {
             <p className="mb-4">
               Your payment was processed successfully. Thank you!
             </p>
-            <button
-              className="btn custom-btn"
-              onClick={() => router.push(`/${id}`)}
-            >
-              Back To Home
-            </button>
+            <div className="btn-cart">
+              <a className="  custom-btn" onClick={() => router.push(`/${id}`)}>
+                Back To Cart
+              </a>
+            </div>
           </div>
         </div>
       </div>

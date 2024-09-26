@@ -13,7 +13,6 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = () => {
   const router = useRouter();
   const currentSlug = useSelector((state: any) => state.slug.currentSlug);
-  const dispatch = useDispatch();
   const cartItemsCount = useSelector(
     (state: any) => state.cart.cartData?.photos.length
   );
@@ -27,14 +26,17 @@ const Header: React.FC<HeaderProps> = () => {
   console.log(currentSlug, "current");
 
   return (
-    <div>
+   
       <header>
-        <div className="container">
+        <div className="container position-sticky">
           <nav className="navbar-custom">
             <div className="container">
               <div className="row align-items-center">
                 <div className="col-4 col-lg-4">
-                  <a className="navbar-brand" href="/">
+                  <a
+                    className="navbar-brand"
+                    onClick={() => router.push(`/${currentSlug}`)}
+                  >
                     <Image
                       src="/images/logo.png"
                       alt="Logo"
@@ -53,7 +55,12 @@ const Header: React.FC<HeaderProps> = () => {
                         </a>
                       </li>
                       <li className="nav-item checkout-btn">
-                        <a className="nav-link custom-btn" href="#">
+                        <a
+                          className="nav-link custom-btn"
+                          onClick={() =>
+                            router.push(`/cart-items/${currentSlug}`)
+                          }
+                        >
                           Checkout
                         </a>
                       </li>
@@ -89,7 +96,6 @@ const Header: React.FC<HeaderProps> = () => {
           </nav>
         </div>
       </header>
-    </div>
   );
 };
 

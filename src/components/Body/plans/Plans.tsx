@@ -71,9 +71,23 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
           pagination={{ clickable: true }}
           navigation={true}
           breakpoints={{
-            1024: { slidesPerView: 3, spaceBetween: 30 },
-            768: { slidesPerView: 2, spaceBetween: 20 },
-            640: { slidesPerView: 1, spaceBetween: 10 },
+           
+            0: {
+              slidesPerView: 1,
+              spaceBetween: 10,
+            },
+            640: {
+              slidesPerView: 1,
+              spaceBetween: 10,
+            },
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            },
           }}
           modules={[Pagination, Navigation]}
         >

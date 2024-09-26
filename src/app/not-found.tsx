@@ -20,12 +20,12 @@ export default function NotFound() {
               Look like something's broken, It's not you its us.How about going
               back to the home page?
             </p>
-            <button
-              className="btn custom-btn"
+            <a
+              className=" custom-btn"
               onClick={() => router.push(`/${id}`)}
             >
               Back To Home{" "}
-            </button>
+            </a>
           </div>
         </div>
       </div>

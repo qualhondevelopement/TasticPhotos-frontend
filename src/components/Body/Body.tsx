@@ -145,7 +145,7 @@ const Body: React.FC<BodyProps> = () => {
                   </label>
                 </div>
                 <div className="btn-cart">
-                  <a className="custom-btn" onClick={handleAddCart}>
+                  <a className="custom-btn"  onClick={handleAddCart}>
                     Add to cart
                   </a>
                 </div>
@@ -170,7 +170,7 @@ const Body: React.FC<BodyProps> = () => {
             <div className="col-md-12">
               <div className="cart-btn-outer">
                 <div className="btn-cart mt-2">
-                  <a href="#" className="custom-btn" onClick={handleAddCart}>
+                  <a  className="custom-btn" onClick={handleAddCart}>
                     Add to cart
                   </a>
                 </div>

@@ -33,13 +33,14 @@ const FailedPage = () => {
             <p className="mb-4">
               Your payment could not be processed. Please try again.
             </p>
-            <Button
-              variant="success"
-              className="btn custom-btn"
-              onClick={() => router.push(`/cart-items/${id}`)}
-            >
-              Back To Cart
-            </Button>
+            <div className="btn-cart">
+              <a
+                className="  custom-btn"
+                onClick={() => router.push(`/cart-items/${id}`)}
+              >
+                Back To Cart
+              </a>
+            </div>
           </div>
         </div>
       </div>

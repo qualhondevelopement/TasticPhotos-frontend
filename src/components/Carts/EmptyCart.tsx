@@ -23,10 +23,10 @@ const EmptyCart = () => {
               </p>
               <a
                 href="#"
-                className="btn custom-btn"
+                className="btn-cart custom-btn"
                 onClick={() => router.push(`/${id}`)}
               >
-               Home Page
+                Home Page
               </a>
             </div>
           </div>

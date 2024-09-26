@@ -85,6 +85,10 @@ header li .nav-link {
 header {
   padding: 20px 0px;
   border-bottom: 1px solid #f5f5f5;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background-color: #fff;
 }
 
 h1,
@@ -428,7 +432,7 @@ a {
     margin: 30px 0px;
   }
 }
-.not-found-heading{
+.not-found-heading {
   color: #3d9be9;
 }
 @media screen and (max-width: 767px) {

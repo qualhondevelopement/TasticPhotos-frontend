@@ -9,6 +9,7 @@ import Head from "next/head";
 import StoreProvider from "./StoreProvider";
 import Header from "@/components/Header/Header";
 import { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -20,6 +21,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <Head>
