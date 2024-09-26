@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import ImageCard from "./ImageType/ImageCard";
+import ImageCard from "./ImageCard/ImageCard";
 import Plans from "./plans/Plans";
 import axios from "axios";
 import { setCartData } from "@/redux/cartSlice";
@@ -151,17 +151,22 @@ const Body: React.FC<BodyProps> = () => {
                 </div>
               </div>
             </div>
+
             {locationName?.map((locationData: any, index: any) => (
-              <React.Fragment key={index}>
+              <>
                 <ImageCard
+                  key={index}
                   title={locationData.name}
                   data={locationData.data}
                   onSelectImage={handleSelectImage}
                   selectedImages={selectedImages}
                 />
-                <hr className="line-grey" />
-              </React.Fragment>
+                {index < locationName.length - 1 && (
+                  <hr className="line-grey" />
+                )}
+              </>
             ))}
+
             <div className="col-md-12">
               <div className="cart-btn-outer">
                 <div className="btn-cart mt-2">
