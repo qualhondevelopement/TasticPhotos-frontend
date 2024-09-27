@@ -4,10 +4,11 @@ type LoadingState = boolean;
 
 const loadingSlice = createSlice({
   name: "loading",
-  initialState: false as LoadingState, 
+  initialState: true as LoadingState,
   reducers: {
     setLoading: (state, action: PayloadAction<LoadingState>) => {
-      return action.payload; 
+      state = action.payload;
+      return state;
     },
   },
 });

@@ -23,13 +23,14 @@ export default function RootLayout({
     if (slug) {
       dispatch(setSlug(slug));
     }
-
+  }, [slug, isloading]);
+  useEffect(() => {
     if (cartData) {
       dispatch(setCartData(cartData));
     }
-  }, [slug, cartData, isloading]);
+  }, [cartData, isloading]);
   useEffect(() => {
-  //  usePreventActions();
+   // usePreventActions();
   }, []);
   return (
     <div>

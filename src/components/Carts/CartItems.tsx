@@ -18,7 +18,7 @@ const CartItems: React.FC<CartItemsProps> = () => {
   const dispatch = useDispatch();
   const stripe = useStripe();
   const isloading = useSelector((state: any) => state.loading);
-
+  const loading = useSelector((state: any) => state.loading);
   const currentSlug = useSelector((state: any) => state.slug.currentSlug);
   const cartData = useSelector((state: any) => state.cart.cartData);
   console.log("cartslug", currentSlug);
@@ -30,7 +30,7 @@ const CartItems: React.FC<CartItemsProps> = () => {
       console.log("cartdata", cartData);
       setCartItems(cartData);
     }
-    console.log("cartitem",isloading)
+    console.log("cartitem", isloading);
     dispatch(setLoading(false));
   }, [cartData, dispatch]);
 
@@ -50,13 +50,16 @@ const CartItems: React.FC<CartItemsProps> = () => {
       console.error("Payment failed", error);
     }
   };
-  
-console.log(cartItems,"cartitems")
+
+  console.log(cartItems, "cartitems");
   return (
     <>
       <div>
-        {cartItems && cartItems.photos && cartItems.photos.length > 0 ? (
-          <>
+        {!loading &&
+        cartItems &&
+        cartItems.photos &&
+        cartItems.photos.length > 0 ? (
+          <div>
             <section className="cart-banner">
               <h3 className="text-white ">Shopping Cart</h3>
             </section>
@@ -78,7 +81,6 @@ console.log(cartItems,"cartitems")
                                     "/images/img-1.webp"
                                   }
                                   alt={item.description}
-                                  style={{ width: "100%", height: "auto" }}
                                 />
                               </div>
                             </div>
@@ -109,9 +111,9 @@ console.log(cartItems,"cartitems")
                 </>
               </div>
             </section>
-          </>
+          </div>
         ) : (
-          (cartItems && cartItems==null  ) && <EmptyCart />
+          !loading && <EmptyCart />
         )}
       </div>
     </>
