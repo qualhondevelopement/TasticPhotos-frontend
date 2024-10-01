@@ -4,9 +4,10 @@ import { usePathname } from "next/navigation";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/redux/loadingSlice";
+import { setCartData } from "@/redux/cartSlice";
 
 const useCartItem = () => {
-  const [cartData, setCartData] = useState<any>(null);
+  //const [cartData, setCartData] = useState<any>(null);
   const pathname = usePathname();
   const id = pathname.split("/").pop();
   const dispatch = useDispatch();
@@ -22,7 +23,8 @@ const useCartItem = () => {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/?qr_id=${id}`
       );
-      setCartData(response.data.data);
+      //setCartData(response.data.data);
+      dispatch(setCartData(response.data.data));
       dispatch(setLoading(false));
     } catch (err) {
       dispatch(setLoading(false));
@@ -31,7 +33,7 @@ const useCartItem = () => {
     }
   };
 
-  return { cartData, slug: id };
+  return { slug: id };
 };
 
 export default useCartItem;

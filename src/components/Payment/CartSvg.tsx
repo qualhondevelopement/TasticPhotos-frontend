@@ -17,7 +17,7 @@ const CartSvg = () => {
         d="M129.473 50.027V22.88c0-11.53 9.308-20.88 20.789-20.88 11.483 0 20.79 9.35 20.79 20.88v27.147"
         stroke="#B31D2D"
         stroke-width="4"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
@@ -38,7 +38,7 @@ const CartSvg = () => {
         d="M171.052 67.445V94.59c0 11.529-9.307 20.883-20.79 20.883-11.484 0-20.789-9.354-20.789-20.883V67.445"
         stroke="#B31D2D"
         stroke-width="4"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
@@ -59,7 +59,7 @@ const CartSvg = () => {
         d="M232.632 102.278v19.985c0 8.491-6.834 15.376-15.264 15.376-8.431 0-15.263-6.885-15.263-15.376v-19.985"
         stroke="#B6471F"
         stroke-width="4"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
@@ -77,7 +77,7 @@ const CartSvg = () => {
         d="M98.42 122.861v24.165c0 10.264-8.247 18.585-18.421 18.585-10.175 0-18.42-8.321-18.42-18.585v-24.165"
         stroke="#2890B7"
         stroke-width="4"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         stroke-linecap="round"
         stroke-linejoin="round"
       />

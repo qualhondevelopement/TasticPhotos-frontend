@@ -17,20 +17,16 @@ export default function RootLayout({
   const isloading = useSelector((state: any) => state.loading);
   console.log(isloading, "load");
   const dispatch = useDispatch();
-  const { cartData, slug } = useCartItem();
+  const {  slug } = useCartItem();
 
   useEffect(() => {
     if (slug) {
       dispatch(setSlug(slug));
     }
   }, [slug, isloading]);
+ 
   useEffect(() => {
-    if (cartData) {
-      dispatch(setCartData(cartData));
-    }
-  }, [cartData, isloading]);
-  useEffect(() => {
-    usePreventActions();
+    //usePreventActions();
   }, []);
   return (
     <div>

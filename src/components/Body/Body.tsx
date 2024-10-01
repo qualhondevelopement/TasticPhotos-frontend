@@ -15,15 +15,16 @@ const Body: React.FC<BodyProps> = () => {
   const scrollTargetRef = useRef<HTMLDivElement>(null);
   const [locationName, setLocationName] = useState<any[]>([]);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
-  const [allCartData, setAllCartData] = useState<any>(null);
+  // const [allCartData, setAllCartData] = useState<any>(null);
   const dispatch = useDispatch();
   const loading = useSelector((state: any) => state.loading);
 
   const id = useSelector((state: any) => state.slug.currentSlug);
-
+  const allCartData = useSelector((state: any) => state.cart.cartData);
+  console.log(allCartData, "gdfghdfhfdhdf");
   useEffect(() => {
     if (id) {
-      fetchCartData();
+      //fetchCartData();
       fetchLocationData();
     }
   }, [id]);
@@ -35,16 +36,16 @@ const Body: React.FC<BodyProps> = () => {
     }
   }, [allCartData]);
 
-  const fetchCartData = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/?qr_id=${id}`
-      );
-      setAllCartData(response.data.data);
-    } catch (err) {
-      console.error("Error fetching cart data:", err);
-    }
-  };
+  // const fetchCartData = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/?qr_id=${id}`
+  //     );
+  //     setAllCartData(response.data.data);
+  //   } catch (err) {
+  //     console.error("Error fetching cart data:", err);
+  //   }
+  // };
 
   const fetchLocationData = async () => {
     dispatch(setLoading(true));
@@ -54,10 +55,13 @@ const Body: React.FC<BodyProps> = () => {
       );
       setLocationName(response.data.data);
       dispatch(setLoading(false));
-    } catch (err) {
+    } catch (err: any) {
       dispatch(setLoading(false));
 
-      console.error("Error fetching location data:", err);
+      const errorMessage =
+        err?.response?.data?.error || "An unknown error occurred";
+      toast.error(errorMessage);
+      console.error("Error fetching location data:", errorMessage);
     }
   };
 
@@ -77,7 +81,9 @@ const Body: React.FC<BodyProps> = () => {
         Object.keys(loc.data)
       );
       setSelectedImages(allImageIds);
-      toast.success("All Images Selected");
+      toast.success("All Images Selected", {
+        id: "4",
+      });
     } else {
       setSelectedImages([]);
     }
@@ -85,7 +91,9 @@ const Body: React.FC<BodyProps> = () => {
 
   const handleAddCart = async () => {
     if (selectedImages.length === 0) {
-      toast.error("No images selected");
+      toast.error("No images selected", {
+        id: "3",
+      });
       return;
     }
 
@@ -95,29 +103,36 @@ const Body: React.FC<BodyProps> = () => {
         photos: selectedImages,
       };
 
-      // Try PUT request first
+      // Try post  request first
       let response;
       try {
-        response = await axios.put(
+        response = await axios.post(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/`,
           cartData
         );
+        if (response.status === 200) {
+          dispatch(setCartData(response.data.data));
+        }
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
-          response = await axios.post(
+          response = await axios.put(
             `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/`,
             cartData
           );
+          dispatch(setCartData(response.data.data));
         } else {
           throw error;
         }
       }
 
-      dispatch(setCartData(response.data.data));
-      toast.success("Cart updated successfully");
+      toast.success("Cart updated successfully", {
+        id: "1",
+      });
     } catch (error) {
       console.error("Error updating cart:", error);
-      toast.error("Failed to update cart");
+      toast.error("Failed to update cart", {
+        id: "2",
+      });
     }
   };
 

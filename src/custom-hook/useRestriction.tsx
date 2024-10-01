@@ -2,14 +2,19 @@ const usePreventActions = () => {
   const handleContextMenu = (e: MouseEvent) => {
     e.preventDefault();
   };
+ 
 
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.keyCode === 123) {
-      // Prevent F12
-      event.preventDefault();
-    } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) {
-      // Prevent Ctrl+Shift+I
-      event.preventDefault();
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "F12") {
+      e.preventDefault(); // Prevent F12
+    }
+    if (e.ctrlKey && e.shiftKey) {
+      if (e.key === "I" || e.key === "C" || e.key === "J") {
+        e.preventDefault(); // Prevent Ctrl+Shift+I, Ctrl+Shift+C, Ctrl+Shift+J
+      }
+    }
+    if (e.ctrlKey && e.key === "u") {
+      e.preventDefault(); // Prevent Ctrl+U
     }
   };
 
