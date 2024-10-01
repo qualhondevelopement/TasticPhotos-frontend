@@ -30,7 +30,7 @@ export default function RootLayout({
     }
   }, [cartData, isloading]);
   useEffect(() => {
-   // usePreventActions();
+    usePreventActions();
   }, []);
   return (
     <div>

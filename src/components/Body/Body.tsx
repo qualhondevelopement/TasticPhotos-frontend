@@ -2,11 +2,12 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import ImageCard from "./ImageCard/ImageCard";
-import Plans from "./plans/Plans";
+import Plans from "./Plans/Plans";
 import axios from "axios";
 import { setCartData } from "@/redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { setLoading } from "@/redux/loadingSlice";
 
 interface BodyProps {}
 
@@ -16,6 +17,7 @@ const Body: React.FC<BodyProps> = () => {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [allCartData, setAllCartData] = useState<any>(null);
   const dispatch = useDispatch();
+  const loading = useSelector((state: any) => state.loading);
 
   const id = useSelector((state: any) => state.slug.currentSlug);
 
@@ -45,12 +47,16 @@ const Body: React.FC<BodyProps> = () => {
   };
 
   const fetchLocationData = async () => {
+    dispatch(setLoading(true));
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-gallery/?qr_id=${id}`
       );
       setLocationName(response.data.data);
+      dispatch(setLoading(false));
     } catch (err) {
+      dispatch(setLoading(false));
+
       console.error("Error fetching location data:", err);
     }
   };
@@ -145,35 +151,40 @@ const Body: React.FC<BodyProps> = () => {
                   </label>
                 </div>
                 <div className="btn-cart">
-                  <a className="custom-btn"  onClick={handleAddCart}>
+                  <a className="custom-btn" onClick={handleAddCart}>
                     Add to cart
                   </a>
                 </div>
               </div>
             </div>
 
-            {locationName?.map((locationData: any, index: any) => (
-              <>
-                <ImageCard
-                  key={index}
-                  title={locationData.name}
-                  data={locationData.data}
-                  onSelectImage={handleSelectImage}
-                  selectedImages={selectedImages}
-                />
-                {index < locationName.length - 1 && (
-                  <hr className="line-grey" />
-                )}
-              </>
-            ))}
+            {!loading &&
+              locationName?.map((locationData: any, index: any) => (
+                <>
+                  <ImageCard
+                    key={index}
+                    title={locationData.name}
+                    data={locationData.data}
+                    onSelectImage={handleSelectImage}
+                    selectedImages={selectedImages}
+                  />
+                  {index < locationName.length - 1 && (
+                    <hr className="line-grey" />
+                  )}
+                </>
+              ))}
 
             <div className="col-md-12">
               <div className="cart-btn-outer">
-                <div className="btn-cart mt-2">
-                  <a  className="custom-btn" onClick={handleAddCart}>
-                    Add to cart
-                  </a>
-                </div>
+                {locationName.length == 0 ? (
+                  ""
+                ) : (
+                  <div className="btn-cart mt-2">
+                    <a className="custom-btn" onClick={handleAddCart}>
+                      Add to cart
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </div>

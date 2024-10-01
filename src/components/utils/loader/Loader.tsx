@@ -1,16 +1,9 @@
 "use client";
 import { PropagateLoader, SyncLoader } from "react-spinners";
-
+import "./loader.css"
 function Loader() {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
+    <div className="modal-overlay">
       <SyncLoader color="#0079c2" size={15} />
     </div>
   );
