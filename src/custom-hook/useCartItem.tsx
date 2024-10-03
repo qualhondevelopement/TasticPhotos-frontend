@@ -1,39 +1,41 @@
-// useCartItem.ts
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setLoading } from "@/redux/loadingSlice";
 import { setCartData } from "@/redux/cartSlice";
+import { setLoading } from "@/redux/loadingSlice";
+import useFetchData from "./useFetchData";
+import API_URLS from "@/customs/constant";
+import toast from "react-hot-toast";
 
 const useCartItem = () => {
-  //const [cartData, setCartData] = useState<any>(null);
   const pathname = usePathname();
-  const id = pathname.split("/").pop();
+  const id = pathname.split("/").pop() || "";
   const dispatch = useDispatch();
+
+  const {
+    data: cartData,
+    error,
+    loading,
+  } = useFetchData(API_URLS.GET_MANAGE_CART(id), "GET");
+
   useEffect(() => {
-    if (id) {
-      fetchCartItemData(id);
-    }
-  }, [id]);
-
-  const fetchCartItemData = async (id: string) => {
-    try {
+    if (loading) {
       dispatch(setLoading(true));
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/?qr_id=${id}`
-      );
-      //setCartData(response.data.data);
-      dispatch(setCartData(response.data.data));
-      dispatch(setLoading(false));
-    } catch (err) {
-      dispatch(setLoading(false));
-
-      console.error("Error fetching cart data:", err);
     }
-  };
+    if (cartData) {
+      dispatch(setCartData(cartData.data));
+      dispatch(setLoading(false));
+    }
+    if (error) {
+      console.error("Error fetching cart data:", error);
+      toast.error(error.data.error, {
+        id: "sd",
+      });
+      dispatch(setLoading(false));
+    }
+  }, [cartData, loading, error, dispatch]);
 
-  return { slug: id };
+  return { slug: id, loading, error };
 };
 
 export default useCartItem;

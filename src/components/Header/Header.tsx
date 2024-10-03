@@ -16,7 +16,6 @@ const Header: React.FC<HeaderProps> = () => {
   const cartItemsCount = useSelector(
     (state: any) => state.cart.cartData?.photos.length
   );
-  console.log(cartItemsCount, "count");
 
   const handleCartButton = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -24,7 +23,6 @@ const Header: React.FC<HeaderProps> = () => {
     event.preventDefault();
     router.push(`/cart-items/${currentSlug}`);
   };
-  console.log(currentSlug, "current");
 
   return (
     <header>

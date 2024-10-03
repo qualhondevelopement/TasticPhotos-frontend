@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ImageCard from "./ImageCard/ImageCard";
 import Plans from "./Plans/Plans";
 import axios from "axios";
+import useSWR from "swr";
 import { setCartData } from "@/redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
@@ -11,23 +12,34 @@ import { setLoading } from "@/redux/loadingSlice";
 
 interface BodyProps {}
 
+const fetcher = (url: string) => axios.get(url).then((res) => res.data.data);
+
 const Body: React.FC<BodyProps> = () => {
   const scrollTargetRef = useRef<HTMLDivElement>(null);
-  const [locationName, setLocationName] = useState<any[]>([]);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
-  // const [allCartData, setAllCartData] = useState<any>(null);
   const dispatch = useDispatch();
   const loading = useSelector((state: any) => state.loading);
-
   const id = useSelector((state: any) => state.slug.currentSlug);
   const allCartData = useSelector((state: any) => state.cart.cartData);
-  console.log(allCartData, "gdfghdfhfdhdf");
+
+  // Use SWR to fetch location data
+  const { data: locationName, error } = useSWR(
+    id
+      ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-gallery/?qr_id=${id}`
+      : null,
+    fetcher
+  );
+  console.log(locationName, "wgterge");
+
+  // Handle error
   useEffect(() => {
-    if (id) {
-      //fetchCartData();
-      fetchLocationData();
+    if (error) {
+      dispatch(setLoading(false));
+      const errorMessage = error?.data?.message || "An unknown error occurred";
+      toast.error(errorMessage);
+      console.error("Error fetching location data:", errorMessage);
     }
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     if (allCartData?.photos) {
@@ -35,35 +47,6 @@ const Body: React.FC<BodyProps> = () => {
       setSelectedImages(imageIds);
     }
   }, [allCartData]);
-
-  // const fetchCartData = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/?qr_id=${id}`
-  //     );
-  //     setAllCartData(response.data.data);
-  //   } catch (err) {
-  //     console.error("Error fetching cart data:", err);
-  //   }
-  // };
-
-  const fetchLocationData = async () => {
-    dispatch(setLoading(true));
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-gallery/?qr_id=${id}`
-      );
-      setLocationName(response.data.data);
-      dispatch(setLoading(false));
-    } catch (err: any) {
-      dispatch(setLoading(false));
-
-      const errorMessage =
-        err?.response?.data?.error || "An unknown error occurred";
-      toast.error(errorMessage);
-      console.error("Error fetching location data:", errorMessage);
-    }
-  };
 
   const handleScroll = () => {
     scrollTargetRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -103,7 +86,7 @@ const Body: React.FC<BodyProps> = () => {
         photos: selectedImages,
       };
 
-      // Try post  request first
+      // Try post request first
       let response;
       try {
         response = await axios.post(
@@ -143,35 +126,37 @@ const Body: React.FC<BodyProps> = () => {
           <Plans handleScroll={handleScroll} />
           <hr className="line-grey" />
           <div className="row">
-            <div className="col-md-12" ref={scrollTargetRef}>
-              <div className="cart-btn-outer mb-3">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    onChange={(e) => handleSelectAll(e.target.checked)}
-                    checked={
-                      selectedImages.length ===
-                      locationName.flatMap((loc: { data: {} }) =>
-                        Object.keys(loc.data)
-                      ).length
-                    }
-                    id="flexCheckChecked"
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="flexCheckChecked"
-                  >
-                    Select all
-                  </label>
-                </div>
-                <div className="btn-cart">
-                  <a className="custom-btn" onClick={handleAddCart}>
-                    Add to cart
-                  </a>
+            {locationName && locationName !== "undefined" ? (
+              <div className="col-md-12" ref={scrollTargetRef}>
+                <div className="cart-btn-outer mb-3">
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      onChange={(e) => handleSelectAll(e.target.checked)}
+                      checked={
+                        selectedImages.length ===
+                        locationName?.flatMap((loc: { data: {} }) =>
+                          Object.keys(loc.data)
+                        ).length
+                      }
+                      id="flexCheckChecked"
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckChecked"
+                    >
+                      Select all
+                    </label>
+                  </div>
+                  <div className="btn-cart">
+                    <a className="custom-btn" onClick={handleAddCart}>
+                      Add to cart
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : null}
 
             {!loading &&
               locationName?.map((locationData: any, index: any) => (
@@ -188,18 +173,15 @@ const Body: React.FC<BodyProps> = () => {
                   )}
                 </>
               ))}
-
             <div className="col-md-12">
               <div className="cart-btn-outer">
-                {locationName.length == 0 ? (
-                  ""
-                ) : (
-                  <div className="btn-cart mt-2">
+                <div className="btn-cart mt-2">
+                  {locationName && locationName !== "undefined" ? (
                     <a className="custom-btn" onClick={handleAddCart}>
                       Add to cart
                     </a>
-                  </div>
-                )}
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>

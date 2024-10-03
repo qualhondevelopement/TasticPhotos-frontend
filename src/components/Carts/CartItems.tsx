@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import EmptyCart from "./EmptyCart";
 import "./cartItem.css";
 import { setLoading } from "@/redux/loadingSlice";
+import toast from "react-hot-toast";
 
 interface CartItemsProps {}
 
@@ -24,7 +25,6 @@ const CartItems: React.FC<CartItemsProps> = () => {
   const currentSlug = useSelector((state: any) => state.slug.currentSlug);
   const cartItems = useSelector((state: any) => state.cart.cartData);
 
-  console.log("cartslug", currentSlug);
   const paymentId = currentSlug;
 
   // useEffect(() => {
@@ -39,19 +39,30 @@ const CartItems: React.FC<CartItemsProps> = () => {
 
     try {
       const response = await axios.get(paymentUrl);
+
       if (response.data && stripe) {
         const { sessionId } = response.data;
         const result = await stripe.redirectToCheckout({ sessionId });
+
         if (result.error) {
-          console.error("Stripe Checkout error", result.error.message);
+          console.error("Stripe Checkout error:", result.error.message);
+          //  toast.error(result.error.message);
         }
+      } else if (response.status !== 200) {
+        console.error("Payment response error:", response.data.message);
+        toast.error("Failed to create a payment session. Please try again.");
       }
-    } catch (error) {
-      console.error("Payment failed", error);
+    } catch (error: any) {
+      console.error(
+        "Payment failed:",
+        error.response ? error.response.data.message : error.message
+      );
+      toast.error(error.response ? error.response.data.message : error.message, {
+        id:"payment "
+      });
     }
   };
 
-  console.log(cartItems, "cartitems");
   return (
     <>
       <div>
@@ -97,7 +108,11 @@ const CartItems: React.FC<CartItemsProps> = () => {
                         </div>
                         <div className="d-flex justify-content-between border-top pt-3">
                           <div>TOTAL PRICE</div>
-                          <div>{cartItems.amount} $</div>
+                          <div>
+                            {cartItems.amount === 0
+                              ? "NA"
+                              : `${cartItems.amount} $`}
+                          </div>
                         </div>
 
                         <div className="d-flex justify-content-center mt-3">
