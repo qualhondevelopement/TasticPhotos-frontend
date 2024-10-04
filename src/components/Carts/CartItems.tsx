@@ -57,9 +57,12 @@ const CartItems: React.FC<CartItemsProps> = () => {
         "Payment failed:",
         error.response ? error.response.data.message : error.message
       );
-      toast.error(error.response ? error.response.data.message : error.message, {
-        id:"payment "
-      });
+      toast.error(
+        error.response ? error.response.data.message : error.message,
+        {
+          id: "payment ",
+        }
+      );
     }
   };
 
@@ -111,7 +114,7 @@ const CartItems: React.FC<CartItemsProps> = () => {
                           <div>
                             {cartItems.amount === 0
                               ? "NA"
-                              : `${cartItems.amount} $`}
+                              : `$ ${cartItems.amount}`}
                           </div>
                         </div>
 

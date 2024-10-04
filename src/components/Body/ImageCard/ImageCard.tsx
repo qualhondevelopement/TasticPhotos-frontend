@@ -26,7 +26,7 @@ const ImageCard: React.FC<ImageCardProps> = ({
     <div>
       <div className="col-md-12">
         <div className="heading-fonts">
-          <h3>{title}</h3>
+          <h3 className="text-capitalize">{title}</h3>
           <hr className="hr-line left-line" />
         </div>
         <div className="row row-marg ">
