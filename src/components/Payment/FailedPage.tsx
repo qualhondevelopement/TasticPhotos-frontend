@@ -1,6 +1,5 @@
 // pages/payment-success.js
 import { useRouter } from "next/navigation";
-import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const FailedPage = () => {
