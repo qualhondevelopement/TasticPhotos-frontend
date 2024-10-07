@@ -36,7 +36,7 @@ const Body: React.FC<BodyProps> = () => {
     if (error) {
       dispatch(setLoading(false));
       const errorMessage = error?.data?.message || "An unknown error occurred";
-      toast.error(errorMessage);
+     // toast.error(errorMessage);
       console.error("Error fetching location data:", errorMessage);
     }
   }, []);

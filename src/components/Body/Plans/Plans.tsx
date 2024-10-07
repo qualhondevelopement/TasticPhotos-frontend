@@ -71,7 +71,6 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
           pagination={{ clickable: true }}
           navigation={true}
           breakpoints={{
-           
             0: {
               slidesPerView: 1,
               spaceBetween: 10,

@@ -1,0 +1,6 @@
+<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Add a white background rectangle -->
+  <rect width="14" height="14" fill="#FFFFFF" />
+  <rect x="1" y="1.70703" width="1" height="16" transform="rotate(-45 1 1.70703)" fill="#FF0000"/> <!-- Red diagonal line -->
+  <rect x="12" y="0.989746" width="1" height="16" transform="rotate(45 12 0.989746)" fill="#FF0000"/> <!-- Red diagonal line -->
+</svg>

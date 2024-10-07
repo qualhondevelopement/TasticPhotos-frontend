@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useStripe, Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,16 +8,21 @@ import EmptyCart from "./EmptyCart";
 import "./cartItem.css";
 import { setLoading } from "@/redux/loadingSlice";
 import toast from "react-hot-toast";
+import { setCartData } from "@/redux/cartSlice";
+import Plans from "../Body/Plans/Plans";
+import DeleteConfirmation from "../Common/DeleteConfirmation";
 
 interface CartItemsProps {}
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string);
 
 const CartItems: React.FC<CartItemsProps> = () => {
+  const [modalShow, setModalShow] = useState<boolean>(false);
   // const [cartItems, setCartItems] = useState<any>(null);
 
   const dispatch = useDispatch();
   const stripe = useStripe();
+  const scrollTargetRef = useRef<HTMLDivElement>(null);
 
   //redux
   const isloading = useSelector((state: any) => state.loading);
@@ -26,13 +31,6 @@ const CartItems: React.FC<CartItemsProps> = () => {
   const cartItems = useSelector((state: any) => state.cart.cartData);
 
   const paymentId = currentSlug;
-
-  // useEffect(() => {
-  //   if (cartItems && cartItems.photos) {
-  //     console.log("cartdata", cartItems);
-  //   }
-  //   console.log("cartitem", isloading);
-  // }, [cartItems]);
 
   const handlePayment = async () => {
     const paymentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/payments/create-checkout-session/?qr_id=${paymentId}`;
@@ -57,12 +55,41 @@ const CartItems: React.FC<CartItemsProps> = () => {
         "Payment failed:",
         error.response ? error.response.data.message : error.message
       );
+      scrollTargetRef.current?.scrollIntoView({ behavior: "smooth" });
+
       toast.error(
         error.response ? error.response.data.message : error.message,
         {
           id: "payment ",
         }
       );
+    }
+  };
+  const handleScroll = () => {
+    scrollTargetRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleRemove = async () => {
+    const { id: photoId } = cartItems;
+    const qrId = currentSlug;
+    console.log({
+      qr_id: qrId,
+      photo_id: photoId,
+    });
+
+    try {
+      const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/`;
+
+      const response = await axios.patch(apiUrl, {
+        qr_id: qrId,
+        photo_id: photoId,
+        operation: "remove",
+      });
+
+      console.log(response.data.data, "remove response");
+      dispatch(response.data.data);
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
     }
   };
 
@@ -96,10 +123,23 @@ const CartItems: React.FC<CartItemsProps> = () => {
                                   }
                                   alt={item.description}
                                 />
+                                <div className="input12">
+                                  <input
+                                    type="checkbox"
+                                    // onClick={handleRemove}
+                                    onClick={() => setModalShow(true)}
+                                  />
+                                  <span></span>
+                                </div>
                               </div>
                             </div>
                           ))}
                         </div>
+                        <DeleteConfirmation
+                          show={modalShow}
+                          handleClose={() => setModalShow(false)}
+                          handleDelete={handleRemove}
+                        />
                       </div>
                     </div>
                     <div className="col-md-4">
@@ -114,12 +154,15 @@ const CartItems: React.FC<CartItemsProps> = () => {
                           <div>
                             {cartItems.amount === 0
                               ? "NA"
-                              : `$ ${cartItems.amount}`}
+                              : `$${cartItems.amount}`}
                           </div>
                         </div>
 
                         <div className="d-flex justify-content-center mt-3">
-                          <a className="custom-btn" onClick={handlePayment}>
+                          <a
+                            className="custom-btn  d-flex align-items-center w-100 justify-content-center"
+                            onClick={handlePayment}
+                          >
                             CHECKOUT
                           </a>
                         </div>
@@ -129,6 +172,11 @@ const CartItems: React.FC<CartItemsProps> = () => {
                 </>
               </div>
             </section>
+            {cartItems.amount === 0 && (
+              <div className="container mb-5 " ref={scrollTargetRef}>
+                <Plans handleScroll={handleScroll} />
+              </div>
+            )}
           </div>
         ) : (
           !loading && <EmptyCart />

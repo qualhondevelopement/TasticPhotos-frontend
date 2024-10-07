@@ -80,7 +80,9 @@ const Header: React.FC<HeaderProps> = () => {
                         />
 
                         {cartItemsCount > 0 && (
-                          <span className="cart-item-no">{cartItemsCount}</span>
+                          <span className="cart-item-no">
+                            <i>{cartItemsCount}</i>
+                          </span>
                         )}
                       </a>
                     </li>

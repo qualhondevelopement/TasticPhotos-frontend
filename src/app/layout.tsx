@@ -12,8 +12,8 @@ import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 
 export const metadata: Metadata = {
-  title: "Gallery",
-  description: "Gallery apk",
+  title: "Tastic Photo",
+  description: "Tastic Photo",
 };
 
 export default function RootLayout({
@@ -21,7 +21,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
       <Head>
@@ -46,7 +45,6 @@ export default function RootLayout({
       <body>
         <StoreProvider>
           <Toaster position="top-center" />
-
           <InstallBootStrap />
           <Header />
           {children}

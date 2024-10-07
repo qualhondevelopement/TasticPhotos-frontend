@@ -73,7 +73,7 @@ header li .nav-link {
 }
 .custom-btn {
   background: #3d9be9;
-  padding: 8px 20px !important;
+  padding: 10px 20px 8px 20px !important;
   border-radius: 40px;
   color: #fff !important;
   transition: 0.3s all;
@@ -154,9 +154,9 @@ h4 {
   font-size: 40px;
 }
 .price-main span {
-  font-size: 25px;
-  color: #3d9be9;
-  line-height: 140%;
+    font-size: 25px;
+    color: #3D9BE9;
+    line-height: 140%;
 }
 .buy-btn {
   padding: 10px 40px !important;
@@ -410,6 +410,28 @@ a {
 
 .empty-cart-sec {
   padding: 100px 0px 0;
+}
+.cart-item-no {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  background-color: #ff3e6c;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 100%;
+}
+.cart-item-no i {
+  font-style: normal;
+  position: relative;
+  top: 1px;
 }
 
 @media screen and (max-width: 1199px) {

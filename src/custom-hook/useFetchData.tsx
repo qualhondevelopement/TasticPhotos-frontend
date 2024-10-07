@@ -22,7 +22,7 @@ const useFetchData = (
       setData(response.data);
       setError(null);
     } catch (err: any) {
-      // console.log(err.response.data.error, "gdggsdds");
+       console.log(err.response.data.error, "erroer");
       setError(err.response || "An error occurred");
       //toast.error(err.response.data.message || "An error occurred");
     } finally {
