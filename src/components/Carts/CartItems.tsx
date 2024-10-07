@@ -14,6 +14,7 @@ import DeleteConfirmation from "../Common/DeleteConfirmation";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import PlansModal from "../Body/Plans/PlansModal";
+import { FcInfo } from "react-icons/fc";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string);
 
@@ -52,7 +53,9 @@ const CartItems: React.FC = () => {
     } catch (error: any) {
       console.error("Payment failed:", error.message);
       scrollTargetRef.current?.scrollIntoView({ behavior: "smooth" });
-      toast.error(error.response?.data?.message || error.message);
+      toast.error(error.response?.data?.message || error.message, {
+        id: "gh",
+      });
     }
   };
 
@@ -132,7 +135,24 @@ const CartItems: React.FC = () => {
                 </div>
                 <div className="col-md-4">
                   <div className="card rounded p-3 summary-cart">
-                    <h4 className="mb-3">Summary</h4>
+                    <div className="d-flex justify-content-between">
+                      <h4 className="mb-3 ">Summary</h4>
+                      <>
+                        {" "}
+                        <button
+                          className="btn p-0 plan-button"
+                          onClick={() => setPlanModalShow(true)}
+                        >
+                          <FcInfo />
+                          View Plans
+                        </button>
+                        <PlansModal
+                          show={planModalShow}
+                          handleClose={() => setPlanModalShow(false)}
+                          handleModalClick={() => setPlanModalShow(false)}
+                        />
+                      </>
+                    </div>
                     <div className="d-flex justify-content-between mb-2">
                       <div>ITEMS</div>
                       <div>{cartItems?.photos?.length}</div>
@@ -140,27 +160,9 @@ const CartItems: React.FC = () => {
                     <div className="d-flex justify-content-between border-top pt-3">
                       <div>TOTAL PRICE</div>
                       <div>
-                        {cartItems.amount === 0 ? (
-                          <>
-                            <button
-                              className="btn btn-link p-0"
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => setPlanModalShow(true)}
-                            >
-                              View Plans
-                            </button>
-                            <PlansModal
-                              show={planModalShow}
-                              handleClose={() => setPlanModalShow(false)}
-                              handleModalClick={() => setPlanModalShow(false)}
-                            />
-                          </>
-                        ) : (
-                          `$${cartItems.amount}`
-                        )}
+                        {cartItems.amount === 0
+                          ? "N/A"
+                          : `$${cartItems.amount}`}
                       </div>
                     </div>
                     <div className="d-flex justify-content-center mt-3">

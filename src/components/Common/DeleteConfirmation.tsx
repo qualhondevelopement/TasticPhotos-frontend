@@ -26,14 +26,14 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
         <Modal.Title>Are you sure?</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Do you really want to delete this image?</p>
+        <p>Do you really want to remove this image?</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Cancel
         </Button>
         <Button variant="danger" onClick={handleDelete}>
-          Delete
+          Remove
         </Button>
       </Modal.Footer>
     </Modal>

@@ -9,10 +9,7 @@ const ContactPage = () => {
   };
 
   return (
-    <Container
-      className="py-5 container"
-
-    >
+    <Container className="py-5 container">
       <h1 className="mb-4">Contact Us</h1>
       <Row>
         <Col md={6}>
@@ -42,7 +39,10 @@ const ContactPage = () => {
                 required
               />
             </Form.Group>
-            <Button variant="primary" type="submit" className="w-100">
+            <Button
+              type="submit"
+              className="custom-btn d-flex align-items-center w-100 justify-content-center"
+            >
               Send Message
             </Button>
           </Form>
@@ -50,8 +50,8 @@ const ContactPage = () => {
         <Col md={6}>
           <h2 className="mb-4">Contact Information</h2>
           <p>Phone: (207) 538-7568</p>
-          <p>Email: contact@example.com</p>
-          <p>Address: 123 Main St, Anytown, USA</p>
+          <p>Email: contact@tastic.com</p>
+          <p>Address: 123 Main St, USA</p>
         </Col>
       </Row>
     </Container>

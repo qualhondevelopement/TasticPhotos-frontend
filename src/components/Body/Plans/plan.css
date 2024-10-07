@@ -6,3 +6,7 @@
 .custom-modal .modal-content {
   padding: 20px;
 }
+
+.plan-button:hover{
+color: #3d9be9;
+}
