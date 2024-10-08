@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -21,9 +20,7 @@ const ImageCard: React.FC<ImageCardProps> = ({
   onSelectImage,
   selectedImages,
 }) => {
- 
   return (
-    <div>
       <div className="col-md-12">
         <div className="heading-fonts">
           <h3 className="text-capitalize">{title}</h3>
@@ -33,7 +30,7 @@ const ImageCard: React.FC<ImageCardProps> = ({
           {data &&
             Object.entries(data).map(
               ([id, src]: [string, string], index: number) => (
-                <div className="col-md-4" key={id}>
+                <div className="col-lg-4 col-md-6" key={id}>
                   <div className="images-main">
                     <img src={src} alt={`Image ${id}`} className="w-100" />
                     <div className="input11">
@@ -50,7 +47,6 @@ const ImageCard: React.FC<ImageCardProps> = ({
             )}
         </div>
       </div>
-    </div>
   );
 };
 

@@ -48,7 +48,10 @@ const Header: React.FC<HeaderProps> = () => {
                 <div className="justify-content-end" id="collapsibleNavbar">
                   <ul className="navbar-nav justify-content-end">
                     <li className="nav-item">
-                      <a className="nav-link" href="/contact">
+                      <a
+                        className="nav-link"
+                        onClick={() => router.push(`/contact/${currentSlug}`)}
+                      >
                         Contact
                       </a>
                     </li>

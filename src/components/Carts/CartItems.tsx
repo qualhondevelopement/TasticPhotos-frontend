@@ -95,7 +95,10 @@ const CartItems: React.FC = () => {
                     <h4>Cart Items</h4>
                     <div className="row">
                       {cartItems.photos.map((item: any) => (
-                        <div key={item.id} className="col-lg-3 col-sm-6">
+                        <div
+                          key={item.id}
+                          className="col-xl-3 col-lg-4 col-sm-6"
+                        >
                           <div className="cart-images-outer">
                             <Image
                               className="img-fluid rounded"
@@ -117,7 +120,7 @@ const CartItems: React.FC = () => {
                         </div>
                       ))}
                       {/* Add a plus button for adding more images */}
-                      <div className="col-lg-3 col-sm-6">
+                      <div className="col-xl-3 col-lg-4 col-sm-6">
                         <div
                           className="custom-add-button"
                           onClick={() => router.push(`/${currentSlug}`)}
@@ -135,17 +138,17 @@ const CartItems: React.FC = () => {
                 </div>
                 <div className="col-md-4">
                   <div className="card rounded p-3 summary-cart">
-                    <div className="d-flex justify-content-between">
-                      <h4 className="mb-3 ">Summary</h4>
+                    <div className="d-flex justify-content-between mb-3">
+                      <h4 className="mb-0">Summary</h4>
                       <>
                         {" "}
-                        <button
-                          className="btn p-0 plan-button"
+                        <span
+                          className=" p-0 plan-button"
                           onClick={() => setPlanModalShow(true)}
                         >
                           <FcInfo />
                           View Plans
-                        </button>
+                        </span>
                         <PlansModal
                           show={planModalShow}
                           handleClose={() => setPlanModalShow(false)}
@@ -153,11 +156,11 @@ const CartItems: React.FC = () => {
                         />
                       </>
                     </div>
-                    <div className="d-flex justify-content-between mb-2">
+                    <div className="d-flex justify-content-between mb-2 items-outer">
                       <div>ITEMS</div>
                       <div>{cartItems?.photos?.length}</div>
                     </div>
-                    <div className="d-flex justify-content-between border-top pt-3">
+                    <div className="d-flex justify-content-between border-top pt-3 items-outer">
                       <div>TOTAL PRICE</div>
                       <div>
                         {cartItems.amount === 0
@@ -178,17 +181,6 @@ const CartItems: React.FC = () => {
               </div>
             </div>
           </section>
-          {/* {cartItems.amount === 0 && (
-            <div className="container mb-5" ref={scrollTargetRef}>
-              <Plans
-                handleScroll={() =>
-                  scrollTargetRef.current?.scrollIntoView({
-                    behavior: "smooth",
-                  })
-                }
-              />
-            </div>
-          )} */}
         </>
       ) : (
         !loading && <EmptyCart />
