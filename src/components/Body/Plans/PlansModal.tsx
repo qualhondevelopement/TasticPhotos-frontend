@@ -1,5 +1,5 @@
 "use client";
-import "./plan.css"
+import "./plan.css";
 import { Modal, Button } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -69,8 +69,13 @@ const PlansModal: React.FC<PlansProps> = ({
       <div className="row justify-content-center ">
         <div className="col-md-12">
           <div className="heading-fonts text-center">
-            <Modal.Header closeButton>
-              <Modal.Title>Our Plans</Modal.Title>
+            <Modal.Header
+              closeButton
+              className="custom-modal-header justify-content-center"
+            >
+              <Modal.Title className="w-100 text-center">
+                <u className="custom-underline">Our Plans</u>
+              </Modal.Title>
             </Modal.Header>
             <p className="max-width-850 mb-4 mt-3">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -120,7 +125,7 @@ const PlansModal: React.FC<PlansProps> = ({
           </div>
         )}
       </div>
-      <Modal.Footer className="">
+      <Modal.Footer className="custom-modal-footer">
         <Button variant="secondary" onClick={handleClose}>
           Cancel
         </Button>

@@ -7,6 +7,18 @@
   padding: 20px;
 }
 
-.plan-button:hover{
-color: #3d9be9;
+.plan-button:hover {
+  color: #3d9be9;
+}
+
+.custom-modal-header {
+  border-bottom: none !important;
+}
+.custom-underline {
+  text-decoration-color: #3d9be9;
+  text-decoration-thickness: 2px;
+  /* padding-top: 10px; */
+}
+.custom-modal-footer {
+  border-top: none !important;
 }

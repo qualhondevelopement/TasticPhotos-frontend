@@ -481,8 +481,15 @@ a {
   width: 100vw;
   background-size: cover;
   background-repeat: no-repeat;
-  position: fixed;
 }
+.constact-header {
+  font-size: 45px;
+  margin-bottom: 40px;
+}
+.contact-phone {
+  /* margin-top: 12px; */
+}
+
 @media screen and (max-width: 1199px) {
   h2 {
     font-size: 45px;
