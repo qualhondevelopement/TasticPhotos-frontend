@@ -475,13 +475,15 @@ a {
   border-radius: 5px;
   background-color: #fff;
 }
-.contact-page {
+
+.contact-info-sec {
   background-image: url("/images/ground.png");
-  height: 100vh;
-  width: 100vw;
-  background-size: cover;
+  background-position: top left;
   background-repeat: no-repeat;
+  background-size: cover;
+  padding: 50px 0;
 }
+
 .constact-header {
   font-size: 45px;
   margin-bottom: 40px;

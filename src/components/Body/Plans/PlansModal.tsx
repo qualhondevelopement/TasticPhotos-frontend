@@ -73,63 +73,57 @@ const PlansModal: React.FC<PlansProps> = ({
               closeButton
               className="custom-modal-header justify-content-center"
             >
-              <Modal.Title className="w-100 text-center">
-                <u className="custom-underline">Our Plans</u>
-              </Modal.Title>
+              <Modal.Title className="w-100 text-center">Our Plans</Modal.Title>
             </Modal.Header>
-            <p className="max-width-850 mb-4 mt-3">
+            <p className="max-width-850 mb-4">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco.
             </p>
           </div>
         </div>
-
-        {data.length > 2 ? (
-          <Swiper
-            slidesPerView={3}
-            spaceBetween={30}
-            pagination={{ clickable: true }}
-            navigation={true}
-            breakpoints={{
-              0: {
-                slidesPerView: 1,
-                spaceBetween: 10,
-              },
-              640: {
-                slidesPerView: 1,
-                spaceBetween: 10,
-              },
-              768: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-              },
-            }}
-            modules={[Pagination, Navigation]}
-          >
-            {data.map((plan) => (
-              <SwiperSlide key={plan.id}>{renderPlan(plan)}</SwiperSlide>
-            ))}
-          </Swiper>
-        ) : (
-          <div className="col-md-12 d-flex flex-wrap justify-content-center">
-            {data.map((plan) => (
-              <div className="col-lg-5 col-md-6" key={plan.id}>
-                {renderPlan(plan)}
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="plan-pricing">
+          {data.length > 2 ? (
+            <Swiper
+              slidesPerView={3}
+              spaceBetween={30}
+              pagination={{ clickable: true }}
+              navigation={true}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                640: {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+              }}
+              modules={[Pagination, Navigation]}
+            >
+              {data.map((plan) => (
+                <SwiperSlide key={plan.id}>{renderPlan(plan)}</SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <div className="col-md-12 d-flex flex-wrap justify-content-center">
+              {data.map((plan) => (
+                <div className="col-lg-5 col-md-6" key={plan.id}>
+                  {renderPlan(plan)}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-      <Modal.Footer className="custom-modal-footer">
-        <Button variant="secondary" onClick={handleClose}>
-          Cancel
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 };
