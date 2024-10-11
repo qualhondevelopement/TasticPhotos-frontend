@@ -15,16 +15,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const isloading = useSelector((state: any) => state.loading);
-  console.log(isloading, "load");
   const dispatch = useDispatch();
-  const {  slug } = useCartItem();
+  const { slug } = useCartItem();
 
   useEffect(() => {
     if (slug) {
       dispatch(setSlug(slug));
     }
   }, [slug, isloading]);
- 
+
   useEffect(() => {
     //usePreventActions();
   }, []);

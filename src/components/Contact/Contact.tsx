@@ -19,7 +19,7 @@ const Contact = () => {
       <section className="contact-info-sec">
         <div className="container">
           <Row>
-            <Col md={6}>
+            <Col md={6} className="pt-3 pb-3  ">
               <h3 className=" contact-header">Contact Information</h3>
               <div className="d-flex align-items-center mt-5 contact-phone">
                 <FiPhoneCall color="#0d6efd" className="me-2" />

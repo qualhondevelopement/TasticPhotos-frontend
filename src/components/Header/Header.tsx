@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {} from "@/redux/cartSlice";
 import Image from "next/image";
-import "./header.css";
 
 interface HeaderProps {}
 
