@@ -20,6 +20,8 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string);
 
 const CartItems: React.FC = () => {
   const [modalShow, setModalShow] = useState<boolean>(false);
+  const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null);
+
   const [planModalShow, setPlanModalShow] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -59,10 +61,8 @@ const CartItems: React.FC = () => {
     }
   };
 
-  const handleRemove = async () => {
-    const { id: photoId } = cartItems;
+  const handleRemove = async (photoId: string) => {
     const qrId = currentSlug;
-
     try {
       const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/`;
       const response = await axios.patch(apiUrl, {
@@ -70,14 +70,18 @@ const CartItems: React.FC = () => {
         photo_id: photoId,
         operation: "remove",
       });
-      toast.success("cart updated successfully");
+      toast.success("Cart updated successfully");
 
-      dispatch(response.data.data);
+      dispatch(setCartData(response.data.data));
       setModalShow(false);
     } catch (error: any) {
       console.error("Error removing item from cart:", error);
       setModalShow(false);
     }
+  };
+  const openModal = (photoId: string) => {
+    setSelectedPhotoId(photoId);
+    setModalShow(true);
   };
 
   return (
@@ -112,7 +116,7 @@ const CartItems: React.FC = () => {
                             <div className="input12">
                               <input
                                 type="checkbox"
-                                onClick={() => setModalShow(true)}
+                                onClick={() => openModal(item.photo_id)}
                               />
                               <span></span>
                             </div>
@@ -132,7 +136,9 @@ const CartItems: React.FC = () => {
                     <DeleteConfirmation
                       show={modalShow}
                       handleClose={() => setModalShow(false)}
-                      handleDelete={handleRemove}
+                      handleDelete={() =>
+                        selectedPhotoId && handleRemove(selectedPhotoId)
+                      }
                     />
                   </div>
                 </div>
