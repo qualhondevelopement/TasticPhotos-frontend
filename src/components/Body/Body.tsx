@@ -30,17 +30,15 @@ const Body: React.FC<BodyProps> = () => {
     fetcher
   );
 
-  console.log(locationName, "wgterge");
-
-  // Handle error
   useEffect(() => {
     if (error) {
-      dispatch(setLoading(false));
-      const errorMessage = error?.data?.message || "An unknown error occurred";
-      // toast.error(errorMessage);
-      console.error("Error fetching location data:", errorMessage);
+      // Show toast message when an error occurs
+      console.log(error.response.data.message, "images");
+      toast.error(error.response.data.message, {
+        id: "error",
+      });
     }
-  }, []);
+  }, [error]);
 
   useEffect(() => {
     if (allCartData?.photos) {

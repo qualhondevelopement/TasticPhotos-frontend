@@ -28,9 +28,9 @@ const useCartItem = () => {
     }
     if (error) {
       console.error("Error fetching cart data:", error);
-      toast.error(error.data?.error || "Network error", {
-        id: "sd",
-      });
+      // toast.error(error.data?.error || "Network error", {
+      //   id: "sd",
+      // });
       dispatch(setLoading(false));
     }
   }, [cartData, loading, error, dispatch]);
