@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import Loader from "../utils/loader/Loader";
 import PaymentLoader from "./PaymentLoader";
 import { FaDownload } from "react-icons/fa";
+import GoBackConfirmation from "../Common/GoBackConfirmation";
 
 const PaymentSuccess = () => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const PaymentSuccess = () => {
   const hasCalledApi = useRef(false);
   const [loading, setLoading] = useState(true);
   const [zipUrl, setZipUrl] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const verifyPaymentAndDownload = async () => {
@@ -29,7 +31,6 @@ const PaymentSuccess = () => {
               qr_id: id,
             }
           );
-          // console.log(response.data);
           setZipUrl(response.data.zip_url);
         } catch (err: any) {
           console.log(err);
@@ -42,6 +43,13 @@ const PaymentSuccess = () => {
 
     verifyPaymentAndDownload();
   }, [sessionId, id]);
+
+  const handleCloseModal = () => setShowModal(false);
+
+  const handleConfirmNavigation = () => {
+    setShowModal(false);
+    router.push(`/${id}`);
+  };
 
   return (
     <section className="empty-cart-sec">
@@ -84,10 +92,7 @@ const PaymentSuccess = () => {
                   Download Your File
                 </a>
                 <div className="btn-cart mt-3">
-                  <a
-                    className="custom-btn"
-                    onClick={() => router.push(`/${id}`)}
-                  >
+                  <a className="custom-btn" onClick={() => setShowModal(true)}>
                     Back To Home
                   </a>
                 </div>
@@ -95,7 +100,6 @@ const PaymentSuccess = () => {
             ) : (
               <div className="btn-cart mt-3">
                 <p>Something went wrong. Please try again.</p>
-
                 <a className="custom-btn" onClick={() => router.push(`/${id}`)}>
                   Back To Home
                 </a>
@@ -104,6 +108,11 @@ const PaymentSuccess = () => {
           </div>
         </div>
       </div>
+      <GoBackConfirmation
+        show={showModal}
+        handleClose={handleCloseModal}
+        handleDelete={handleConfirmNavigation}
+      />
     </section>
   );
 };

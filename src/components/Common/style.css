@@ -76,3 +76,44 @@
   display: inline-block;
   margin: 100px auto;
 }
+/*  back go */
+.go-back-modal {
+  border-radius: 10px; /* Rounded corners */
+}
+
+.modal-title {
+  font-size: 1.5rem; /* Larger title */
+  color: #343a40; /* Darker text color for the title */
+}
+
+.modal-message {
+  font-size: 1.1rem; /* Slightly larger message font */
+  color: #495057; /* Soft dark text for readability */
+}
+
+.modal-footer {
+  justify-content: flex-end; /* Align footer buttons to the right */
+}
+
+button {
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for button hover */
+}
+
+button:hover {
+  background-color: #f8f9fa; /* Light background on hover */
+}
+
+/* Customize button variants */
+button.btn-outline-secondary {
+  border-color: #6c757d; /* Dark border for the cancel button */
+  color: #6c757d; /* Dark text color */
+}
+
+button.btn-danger {
+  background-color: #dc3545; /* Bootstrap danger color */
+  color: white; /* White text color */
+}
+
+button.btn-danger:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
