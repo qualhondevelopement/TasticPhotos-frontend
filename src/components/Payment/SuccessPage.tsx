@@ -16,7 +16,7 @@ const PaymentSuccess = () => {
   const hasCalledApi = useRef(false);
   const [loading, setLoading] = useState(true);
   const [zipUrl, setZipUrl] = useState<string | null>(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false); // State for modal visibility
 
   useEffect(() => {
     const verifyPaymentAndDownload = async () => {
@@ -31,6 +31,7 @@ const PaymentSuccess = () => {
               qr_id: id,
             }
           );
+          // console.log(response.data);
           setZipUrl(response.data.zip_url);
         } catch (err: any) {
           console.log(err);
@@ -43,14 +44,14 @@ const PaymentSuccess = () => {
 
     verifyPaymentAndDownload();
   }, [sessionId, id]);
-
+  // Function to handle modal close
   const handleCloseModal = () => setShowModal(false);
 
+  // Function to confirm navigation
   const handleConfirmNavigation = () => {
     setShowModal(false);
     router.push(`/${id}`);
   };
-
   return (
     <section className="empty-cart-sec">
       <div className="container">
@@ -92,7 +93,10 @@ const PaymentSuccess = () => {
                   Download Your File
                 </a>
                 <div className="btn-cart mt-3">
-                  <a className="custom-btn" onClick={() => setShowModal(true)}>
+                  <a
+                    className="custom-btn"
+                    onClick={() => router.push(`/${id}`)}
+                  >
                     Back To Home
                   </a>
                 </div>
@@ -100,6 +104,7 @@ const PaymentSuccess = () => {
             ) : (
               <div className="btn-cart mt-3">
                 <p>Something went wrong. Please try again.</p>
+
                 <a className="custom-btn" onClick={() => router.push(`/${id}`)}>
                   Back To Home
                 </a>
@@ -108,6 +113,7 @@ const PaymentSuccess = () => {
           </div>
         </div>
       </div>
+      {/* Modal component */}
       <GoBackConfirmation
         show={showModal}
         handleClose={handleCloseModal}
