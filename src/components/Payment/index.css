@@ -25,3 +25,141 @@ p {
 .empty-cart-sec {
   padding: 100px 0px 0;
 }
+
+/* loader csss */
+.loader-container {
+  height: 100vh; /* Full viewport height */
+  background: linear-gradient(
+    135deg,
+    #e9ecef 0%,
+    #f8f9fa 100%
+  ); /* Subtle gradient background */
+  border-radius: 15px; /* Rounded corners */
+  padding: 40px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  animation: fadeIn 0.5s ease-in; /* Fade-in effect for entrance */
+}
+
+.loader-spinner {
+  width: 60px;
+  height: 60px;
+  border-width: 5px; /* Thicker spinner */
+  animation: spin 1s infinite; /* Custom spin animation */
+}
+
+.loader-text {
+  font-size: 1.2rem; /* Larger font size for better readability */
+  color: #343a40; /* Darker text color for contrast */
+}
+
+.loader-step {
+  margin: 15px 0; /* Spacing between steps */
+  font-weight: 500; /* Medium font weight */
+  transition: transform 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.loader-step:hover {
+  transform: translateY(-2px); /* Slight lift on hover for interactivity */
+}
+
+.checkmark {
+  color: #28a745; /* Green checkmark for completed steps */
+  font-size: 1.5rem; /* Larger checkmark */
+  animation: bounce 0.5s; /* Bounce effect for checkmark */
+}
+
+.step-indicator {
+  color: #007bff; /* Blue step indicator */
+  font-weight: bold; /* Bold for prominence */
+}
+
+.step-message {
+  transition: color 0.3s; /* Smooth transition for current step */
+}
+
+.current {
+  font-weight: bold; /* Emphasize current step */
+  color: #007bff; /* Highlight current step */
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* download  */
+.custom-btn {
+  display: inline-flex; /* Flexbox for icon and text alignment */
+  align-items: center; /* Center the icon and text vertically */
+  padding: 12px 24px; /* Padding for the button */
+  background-color: #007bff; /* Bootstrap primary color */
+  color: #fff; /* White text */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1rem; /* Font size */
+  font-weight: 500; /* Medium font weight */
+  text-decoration: none; /* Remove underline from link */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.custom-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.custom-btn:active {
+  transform: translateY(0); /* Reset lift effect on click */
+}
+
+.download-icon {
+  margin-right: 8px; /* Space between icon and text */
+  font-size: 1.2rem; /* Slightly larger icon */
+}
+
+/* Optional: Add a pulse animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.custom-btn:hover .download-icon {
+  animation: pulse 1s infinite; /* Pulsing effect on hover */
+}
