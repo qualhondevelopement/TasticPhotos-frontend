@@ -15,12 +15,12 @@ const EmptyCart = () => {
             <div className="col-lg-6 col-md-12 col-12 text-center">
               <CartSvg />
               <h4 className="mt-4 mb-4">Your shopping cart is empty</h4>
-              <p className="mb-4">
+              {/* <p className="mb-4">
                 Return to the store to add items for your delivery slot. Before
                 proceeding to checkout, you must add some products to your
                 shopping cart. You will find a lot of interesting products on
                 our shop page.
-              </p>
+              </p> */}
               <a
                 href="#"
                 className="btn-cart custom-btn"

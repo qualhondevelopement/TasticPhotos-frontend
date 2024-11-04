@@ -56,11 +56,7 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
         <div className="heading-fonts text-center">
           <h2>Our Plans</h2>
           <hr className="hr-line" />
-          <p className="max-width-850 mb-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco.
-          </p>
+         
         </div>
       </div>
 

@@ -491,6 +491,9 @@ a {
 .contact-phone {
   /* margin-top: 12px; */
 }
+.price-box p {
+  min-height: 50px;
+}
 
 @media screen and (max-width: 1199px) {
   h2 {
