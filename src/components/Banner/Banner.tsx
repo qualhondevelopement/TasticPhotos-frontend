@@ -13,7 +13,7 @@ const Banner = () => {
   useEffect(() => {
     if (data) {
       setBannerImage(data.url);
-     // console.log(data.url, "url");
+      // console.log(data.url, "url");
     }
   }, [data]);
 
@@ -22,7 +22,11 @@ const Banner = () => {
       {loading ? (
         <div className="skeleton"></div>
       ) : (
-        <img src={bannerImage} alt="Banner" className="w-100" />
+        <img
+          src={bannerImage ? bannerImage : "/defaultBanner.png"}
+          alt="Banner"
+          className="w-100"
+        />
       )}
     </section>
   );

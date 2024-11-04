@@ -33,8 +33,8 @@ const Body: React.FC<BodyProps> = () => {
   useEffect(() => {
     if (error) {
       // Show toast message when an error occurs
-      console.log(error.response.data.message, "images");
-      toast.error(error.response.data.message, {
+      console.log(error.response?.data?.message, "images");
+      toast.error(error.response?.data?.message, {
         id: "error",
       });
     }
