@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Loader from "../utils/loader/Loader";
 import PaymentLoader from "./PaymentLoader";
 import { FaDownload } from "react-icons/fa";
 import GoBackConfirmation from "../Common/GoBackConfirmation";
@@ -16,7 +15,7 @@ const PaymentSuccess = () => {
   const hasCalledApi = useRef(false);
   const [loading, setLoading] = useState(true);
   const [zipUrl, setZipUrl] = useState<string | null>(null);
-  const [showModal, setShowModal] = useState(false); // State for modal visibility
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const verifyPaymentAndDownload = async () => {
@@ -93,10 +92,7 @@ const PaymentSuccess = () => {
                   Download Your File
                 </a>
                 <div className="btn-cart mt-3">
-                  <a
-                    className="custom-btn"
-                    onClick={() => router.push(`/${id}`)}
-                  >
+                  <a className="custom-btn" onClick={() => setShowModal(true)}>
                     Back To Home
                   </a>
                 </div>
@@ -105,7 +101,7 @@ const PaymentSuccess = () => {
               <div className="btn-cart mt-3">
                 <p>Something went wrong. Please try again.</p>
 
-                <a className="custom-btn" onClick={() => router.push(`/${id}`)}>
+                <a className="custom-btn" onClick={() => setShowModal(true)}>
                   Back To Home
                 </a>
               </div>
