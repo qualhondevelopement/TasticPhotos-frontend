@@ -75,11 +75,11 @@ const PlansModal: React.FC<PlansProps> = ({
             >
               <Modal.Title className="w-100 text-center">Our Plans</Modal.Title>
             </Modal.Header>
-            <p className="max-width-850 mb-4">
+            {/* <p className="max-width-850 mb-4">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco.
-            </p>
+            </p> */}
           </div>
         </div>
         <div className="plan-pricing">

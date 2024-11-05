@@ -99,7 +99,7 @@ const CartItems: React.FC = () => {
             <div className="container" onClick={handleGoBack}>
               <a href="#" className="backbtn">
                 <IoIosArrowBack size={20} className="back-button" />
-                Back
+                Back To Gallery
               </a>
             </div>
           </div>
