@@ -85,7 +85,7 @@ const CartItems: React.FC = () => {
     setModalShow(true);
   };
   const handleGoBack = () => {
-    router.back();
+    router.push(`/${currentSlug}`);
   };
 
   return (
@@ -96,13 +96,9 @@ const CartItems: React.FC = () => {
             <h3 className="text-white">Shopping Cart</h3>
           </section>
           <div className="back-btn mt-5">
-            <div className="container">
+            <div className="container" onClick={handleGoBack}>
               <a href="#" className="backbtn">
-                <IoIosArrowBack
-                  size={20}
-                  className="back-button"
-                  onClick={handleGoBack}
-                />
+                <IoIosArrowBack size={20} className="back-button" />
                 Back
               </a>
             </div>

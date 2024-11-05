@@ -517,7 +517,8 @@ a {
   color: #3d9be9;
 }
 .backbtn:hover {
-  opacity: 0.6;
+  /* opacity: 0.6; */
+  color: #464747;
 }
 .overlay-image-container {
   text-align: center;
