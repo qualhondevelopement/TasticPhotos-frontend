@@ -15,6 +15,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import PlansModal from "../Body/Plans/PlansModal";
 import { FcInfo } from "react-icons/fc";
+import { IoIosArrowBack, IoMdArrowRoundBack } from "react-icons/io";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string);
 
@@ -83,6 +84,9 @@ const CartItems: React.FC = () => {
     setSelectedPhotoId(photoId);
     setModalShow(true);
   };
+  const handleGoBack = () => {
+    router.back();
+  };
 
   return (
     <div>
@@ -91,6 +95,18 @@ const CartItems: React.FC = () => {
           <section className="cart-banner">
             <h3 className="text-white">Shopping Cart</h3>
           </section>
+          <div className="back-btn mt-5">
+            <div className="container">
+              <a href="#" className="backbtn">
+                <IoIosArrowBack
+                  size={20}
+                  className="back-button"
+                  onClick={handleGoBack}
+                />
+                Back
+              </a>
+            </div>
+          </div>
           <section className="cart-items-sec">
             <div className="container">
               <div className="row">

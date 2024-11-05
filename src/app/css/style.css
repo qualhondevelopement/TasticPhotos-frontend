@@ -441,7 +441,7 @@ a {
   padding: 60px 0px;
 }
 .cart-items-sec {
-  padding: 50px 0px;
+  padding: 10px 0px 50px;
 }
 .cart-container h4,
 .summary-cart h4 {
@@ -494,6 +494,37 @@ a {
 .price-box p {
   min-height: 50px;
 }
+.cart-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: -12px;
+}
+.back-button {
+  position: relative;
+  top: -2px;
+  cursor: pointer;
+}
+
+.photo-title {
+  font-size: 45px;
+}
+.backbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 20px;
+  color: #3d9be9;
+}
+.backbtn:hover {
+  opacity: 0.6;
+}
+.overlay-image-container {
+  text-align: center;
+  margin-top: -113px;
+  z-index: 1;
+  position: relative;
+}
 
 @media screen and (max-width: 1199px) {
   h2 {
@@ -524,9 +555,24 @@ a {
   .items-outer {
     font-size: 16px;
   }
+  .photo-title {
+    font-size: 32px;
+  }
 }
 .not-found-heading {
   color: #3d9be9;
+}
+
+@media screen and (max-width: 991px) {
+  .photo-title {
+    font-size: 25px;
+  }
+  .overlay-image-container {
+    margin-top: -59px;
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 @media screen and (max-width: 767px) {
   .locations-sec .col-lg-5 {
@@ -571,6 +617,15 @@ a {
   .summary-cart {
     margin-top: 15px;
   }
+  .photo1,
+  .gorilla {
+    display: none;
+  }
+  .content-page {
+    width: 100%;
+    padding-top: 40px;
+    padding-bottom: 20px;
+  }
 }
 
 @media screen and (max-width: 575px) {
@@ -582,6 +637,14 @@ a {
   }
   .navbar-brand img {
     max-width: 100px;
+  }
+
+  .banner-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .banner-content p {
+    font-size: 1rem;
   }
 }
 .slick-prev:hover:before,
@@ -599,7 +662,6 @@ a {
   background-image: url("/images/bgBanner2.jpg");
   background-size: cover;
   background-position: center;
-  min-height: 300px;
   color: #172260;
 }
 
@@ -609,46 +671,7 @@ a {
 }
 
 /* Overlay Image Positioning */
-.overlay-image-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 17%);
-  text-align: center;
-  width: 80%;
-}
 
-/* Responsive adjustments for columns */
-@media (max-width: 768px) {
-  .banner-background {
-    min-height: 250px;
-  }
-
-  .overlay-image-container {
-    transform: translate(-50%, 5%);
-  }
-}
-
-/* Gorilla Image Styling */
 .gorilla {
-  margin-bottom: -42px;
-}
-
-@media (max-width: 576px) {
-  .overlay-image-container {
-    width: 90%;
-    transform: translate(-50%, 30%);
-  }
-
-  .banner-content h2 {
-    font-size: 1.5rem;
-  }
-
-  .banner-content p {
-    font-size: 1rem;
-  }
-
-  .gorilla {
-    margin-bottom: -30px;
-  }
+  margin-top: auto;
 }

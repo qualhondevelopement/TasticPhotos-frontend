@@ -124,9 +124,9 @@ const Body: React.FC<BodyProps> = () => {
         <div className="container ">
           <Plans handleScroll={handleScroll} />
           <hr className="line-grey" />
-          <div className="row">
+          <div className="row" ref={scrollTargetRef}>
             {locationName && locationName !== "undefined" ? (
-              <div className="col-md-12" ref={scrollTargetRef}>
+              <div className="col-md-12">
                 <div className="cart-btn-outer mb-3">
                   <div className="form-check">
                     <input
