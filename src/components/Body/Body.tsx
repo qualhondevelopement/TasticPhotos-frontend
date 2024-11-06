@@ -17,10 +17,10 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data.data);
 const Body: React.FC<BodyProps> = () => {
   const scrollTargetRef = useRef<HTMLDivElement>(null);
   const previousError = useRef<string | null>(null);
+  const dispatch = useDispatch();
 
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [allImageChecked, setAllImageChecked] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const loading = useSelector((state: any) => state.loading);
   const id = useSelector((state: any) => state.slug.currentSlug);
   const allCartData = useSelector((state: any) => state.cart.cartData);
@@ -32,6 +32,26 @@ const Body: React.FC<BodyProps> = () => {
       : null,
     fetcher
   );
+
+  console.log(locationName, "name");
+
+  useEffect(() => {
+    console.log("here");
+    if (!locationName) return;
+    const totalEntries = locationName.reduce(
+      (count: any, item: any) => count + Object.keys(item.data).length,
+      0
+    );
+    console.log(totalEntries, "toalss");
+    if (selectedImages.length == totalEntries) {
+      console.log(selectedImages.length);
+      console.log(allCartData?.photos?.length);
+
+      setAllImageChecked(true);
+    } else {
+      setAllImageChecked(false);
+    }
+  }, [locationName]);
 
   useEffect(() => {
     if (error) {
@@ -105,15 +125,14 @@ const Body: React.FC<BodyProps> = () => {
           cartData
         );
         if (response.status === 200) {
-          dispatch(setCartData(response.data.data));
-
-          axios.post(
+          const anotherResponse = await axios.post(
             `${process.env.NEXT_PUBLIC_BASE_URL}/api/select-all-event/`,
             {
               select_all: allImageChecked,
               qr_id: id,
             }
           );
+          dispatch(setCartData(anotherResponse.data.data));
         }
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
@@ -121,14 +140,16 @@ const Body: React.FC<BodyProps> = () => {
             `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/`,
             cartData
           );
-          dispatch(setCartData(response.data.data));
-          axios.post(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/select-all-event/`,
-            {
-              select_all: allImageChecked,
-              qr_id: id,
-            }
-          );
+          if (response.status === 200) {
+            const anotherResponse = await axios.post(
+              `${process.env.NEXT_PUBLIC_BASE_URL}/api/select-all-event/`,
+              {
+                select_all: allImageChecked,
+                qr_id: id,
+              }
+            );
+            dispatch(setCartData(anotherResponse.data.data));
+          }
         } else {
           throw error;
         }

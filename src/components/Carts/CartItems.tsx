@@ -65,12 +65,15 @@ const CartItems: React.FC = () => {
   const handleRemove = async (photoId: string) => {
     const qrId = currentSlug;
     try {
+      dispatch(setLoading(true));
       const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/manage-cart/`;
       const response = await axios.patch(apiUrl, {
         qr_id: qrId,
         photo_id: photoId,
         operation: "remove",
       });
+      dispatch(setLoading(false));
+
       toast.success("Cart updated successfully");
 
       dispatch(setCartData(response.data.data));
@@ -78,6 +81,7 @@ const CartItems: React.FC = () => {
     } catch (error: any) {
       console.error("Error removing item from cart:", error);
       setModalShow(false);
+      dispatch(setLoading(false));
     }
   };
   const openModal = (photoId: string) => {
