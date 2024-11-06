@@ -9,6 +9,7 @@ import { setCartData } from "@/redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { setLoading } from "@/redux/loadingSlice";
+import { useRouter } from "next/navigation";
 
 interface BodyProps {}
 
@@ -18,7 +19,7 @@ const Body: React.FC<BodyProps> = () => {
   const scrollTargetRef = useRef<HTMLDivElement>(null);
   const previousError = useRef<string | null>(null);
   const dispatch = useDispatch();
-
+  const router = useRouter();
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [allImageChecked, setAllImageChecked] = useState<boolean>(false);
   const loading = useSelector((state: any) => state.loading);
@@ -57,18 +58,23 @@ const Body: React.FC<BodyProps> = () => {
     if (error) {
       const errorMessage = error.response?.data?.message;
 
-      // Only show toast if it's a new error message
+      // Show toast if it's a new error message
       if (errorMessage && previousError.current !== errorMessage) {
         previousError.current = errorMessage;
         toast.error(errorMessage, {
           id: `gallery-error-${errorMessage}`,
         });
+
+        // Delay the redirection slightly to ensure toast is shown
+        setTimeout(() => {
+          router.push("/");
+        }, 1000); // Adjust delay as needed
       }
     } else {
       // Reset previous error when there's no error
       previousError.current = null;
     }
-  }, [error]);
+  }, [error, router]);
 
   useEffect(() => {
     if (allCartData?.photos) {
