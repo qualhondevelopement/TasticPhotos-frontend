@@ -5,6 +5,7 @@ import usePreventActions from "@/custom-hook/useRestriction";
 import { setCartData } from "@/redux/cartSlice";
 import { setLoading } from "@/redux/loadingSlice";
 import { setSlug } from "@/redux/slugSlice";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -15,10 +16,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const isloading = useSelector((state: any) => state.loading);
+  const router = useRouter();
   const dispatch = useDispatch();
   const { slug } = useCartItem();
 
   useEffect(() => {
+    if (slug == "null") {
+      router.push(`/`);
+    }
     if (slug) {
       dispatch(setSlug(slug));
     }

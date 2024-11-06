@@ -23,7 +23,7 @@ const Banner = () => {
         <div className="skeleton"></div>
       ) : (
         <img
-          src={bannerImage ? bannerImage : "/defaultBanner.png"}
+          src={bannerImage ? bannerImage : "/images/banner.png"}
           alt="Banner"
           className="w-100"
         />

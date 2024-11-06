@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 const EmptyCart = () => {
   const router = useRouter();
   const id = useSelector((state: any) => state.slug.currentSlug);
+
   return (
     <div>
       {" "}

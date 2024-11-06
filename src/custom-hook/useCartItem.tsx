@@ -1,41 +1,66 @@
-import { useEffect } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setCartData } from "@/redux/cartSlice";
 import { setLoading } from "@/redux/loadingSlice";
 import useFetchData from "./useFetchData";
 import API_URLS from "@/customs/constant";
-import toast from "react-hot-toast";
 
 const useCartItem = () => {
   const pathname = usePathname();
-  const id = pathname.split("/").pop() || "";
+  // Memoize the ID extraction to prevent unnecessary recalculations
+  const id = useMemo(() => pathname.split("/").pop() || "", [pathname]);
   const dispatch = useDispatch();
 
-  const {
-    data: cartData,
-    error,
-    loading,
-  } = useFetchData(API_URLS.GET_MANAGE_CART(id), "GET");
+  // Memoize the API URL to prevent unnecessary re-renders
+  const apiUrl = useMemo(() => API_URLS.GET_MANAGE_CART(id), [id]);
+
+  // Fetch cart data using the custom hook
+  const { data: cartData, error, loading } = useFetchData(apiUrl, "GET");
+
+  // Memoize the error handler to prevent recreation on each render
+  const handleError = useCallback(
+    (error: any) => {
+      console.error("Error fetching cart data:", error);
+      dispatch(setLoading(false));
+    },
+    [dispatch]
+  );
+
+  // Memoize the success handler
+  const handleSuccess = useCallback(
+    (data: any) => {
+      dispatch(setCartData(data.data));
+      dispatch(setLoading(false));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
+    // Set loading state
     if (loading) {
       dispatch(setLoading(true));
+      return;
     }
-    if (cartData) {
-      dispatch(setCartData(cartData.data));
-      dispatch(setLoading(false));
-    }
-    if (error) {
-      console.error("Error fetching cart data:", error);
-      // toast.error(error.data?.error || "Network error", {
-      //   id: "sd",
-      // });
-      dispatch(setLoading(false));
-    }
-  }, [cartData, loading, error, dispatch]);
 
-  return { slug: id, loading, error };
+    // Handle success case
+    if (cartData) {
+      handleSuccess(cartData);
+      return;
+    }
+
+    // Handle error case
+    if (error) {
+      handleError(error);
+    }
+  }, [cartData, loading, handleSuccess, handleError]);
+
+  // Return only necessary values
+  return {
+    slug: id,
+    loading,
+    error: error ? error.data?.error || "Network error" : null,
+  };
 };
 
 export default useCartItem;

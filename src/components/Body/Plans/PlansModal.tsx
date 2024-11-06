@@ -82,7 +82,7 @@ const PlansModal: React.FC<PlansProps> = ({
             </p> */}
           </div>
         </div>
-        <div className="plan-pricing">
+        <div className="plan-pricing mt-3">
           {data.length > 2 ? (
             <Swiper
               slidesPerView={3}

@@ -25,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         {/* Google Fonts */}
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

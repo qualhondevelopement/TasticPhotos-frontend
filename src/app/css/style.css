@@ -246,7 +246,7 @@ p {
 }
 .images-main img {
   aspect-ratio: 16 / 8;
-  object-fit: cover;
+  object-fit: contain;
 }
 .row-marg .col-md-6 {
   margin-bottom: 1.5rem;
@@ -526,6 +526,13 @@ a {
   z-index: 1;
   position: relative;
 }
+.find-photo-section {
+  margin-top: 70px;
+}
+.upload-picture-input {
+  background-color: white;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 1199px) {
   h2 {
@@ -629,6 +636,9 @@ a {
     width: 100%;
     padding-top: 40px;
     padding-bottom: 20px;
+  }
+  .find-photo-section {
+    margin-top: 30px;
   }
 }
 

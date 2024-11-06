@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = () => {
   const router = useRouter();
   const currentSlug = useSelector((state: any) => state.slug.currentSlug);
   const cartItemsCount = useSelector(
-    (state: any) => state.cart.cartData?.photos.length
+    (state: any) => state.cart.cartData?.photos?.length
   );
 
   const handleCartButton = (
@@ -30,10 +30,7 @@ const Header: React.FC<HeaderProps> = () => {
           <div className="container">
             <div className="row align-items-center">
               <div className="col-4 col-lg-4">
-                <a
-                  className="navbar-brand"
-                  onClick={() => router.push(`/${currentSlug}`)}
-                >
+                <a className="navbar-brand" onClick={() => router.push(`/`)}>
                   <Image
                     src="/images/logo.png"
                     alt="Logo"
@@ -49,7 +46,7 @@ const Header: React.FC<HeaderProps> = () => {
                     <li className="nav-item">
                       <a
                         className="nav-link"
-                        onClick={() => router.push(`/contact/${currentSlug}`)}
+                        onClick={() => router.push(`/contact`)}
                       >
                         Contact
                       </a>

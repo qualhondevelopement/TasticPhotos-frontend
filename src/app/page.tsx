@@ -1,22 +1,33 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import "./globals.css";
+import { useRef, useCallback } from "react";
 import HomeBanner from "@/components/Banner/HomeBanner";
 import DefaultHome from "@/components/Body/Home/DefaultHome";
+import Banner from "@/components/Banner/Banner";
+import Plans from "@/components/Body/Plans/Plans";
 
 export default function Home() {
-  const router = useRouter();
+  const scrollTargetRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    router.push(`/`);
-  }, [router]);
+  const handleScroll = useCallback(() => {
+    scrollTargetRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   return (
-    <>
-      <HomeBanner />
-      <DefaultHome />
-    </>
+    <div className="">
+      <Banner />
+      <div className="locations-sec">
+        <div className="container ">
+          <Plans handleScroll={handleScroll} />
+        </div>
+        <div className="find-photo-section">
+          <HomeBanner />
+        </div>
+
+        <div ref={scrollTargetRef}>
+          <DefaultHome />
+        </div>
+      </div>
+    </div>
   );
 }

@@ -16,7 +16,10 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data.data);
 
 const Body: React.FC<BodyProps> = () => {
   const scrollTargetRef = useRef<HTMLDivElement>(null);
+  const previousError = useRef<string | null>(null);
+
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
+  const [allImageChecked, setAllImageChecked] = useState<boolean>(false);
   const dispatch = useDispatch();
   const loading = useSelector((state: any) => state.loading);
   const id = useSelector((state: any) => state.slug.currentSlug);
@@ -32,11 +35,18 @@ const Body: React.FC<BodyProps> = () => {
 
   useEffect(() => {
     if (error) {
-      // Show toast message when an error occurs
-      console.log(error.response?.data?.message, "images");
-      toast.error(error.response?.data?.message, {
-        id: "error",
-      });
+      const errorMessage = error.response?.data?.message;
+
+      // Only show toast if it's a new error message
+      if (errorMessage && previousError.current !== errorMessage) {
+        previousError.current = errorMessage;
+        toast.error(errorMessage, {
+          id: `gallery-error-${errorMessage}`,
+        });
+      }
+    } else {
+      // Reset previous error when there's no error
+      previousError.current = null;
     }
   }, [error]);
 
@@ -63,11 +73,13 @@ const Body: React.FC<BodyProps> = () => {
         Object.keys(loc.data)
       );
       setSelectedImages(allImageIds);
+      setAllImageChecked(true);
       toast.success("All Images Selected", {
         id: "4",
       });
     } else {
       setSelectedImages([]);
+      setAllImageChecked(false);
     }
   };
 
@@ -94,6 +106,14 @@ const Body: React.FC<BodyProps> = () => {
         );
         if (response.status === 200) {
           dispatch(setCartData(response.data.data));
+
+          axios.post(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/select-all-event/`,
+            {
+              select_all: allImageChecked,
+              qr_id: id,
+            }
+          );
         }
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
@@ -102,6 +122,13 @@ const Body: React.FC<BodyProps> = () => {
             cartData
           );
           dispatch(setCartData(response.data.data));
+          axios.post(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/select-all-event/`,
+            {
+              select_all: allImageChecked,
+              qr_id: id,
+            }
+          );
         } else {
           throw error;
         }

@@ -25,7 +25,7 @@ export default function DefaultHome() {
     <div className="container mt-5 d-flex justify-content-center">
       <div className="align-items-center text-center mb-4">
         <div
-          className="upload-area align-items-center"
+          className="upload-area align-items-center upload-picture-input cursor-pointer"
           onClick={() => document.getElementById("fileInput")?.click()}
         >
           <input
@@ -33,7 +33,7 @@ export default function DefaultHome() {
             type="file"
             accept="image/*"
             onChange={handleImageUpload}
-            className="d-none"
+            className="d-none "
           />
           <div className="upload-container border p-3">
             {image ? (
