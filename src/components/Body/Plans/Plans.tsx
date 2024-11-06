@@ -38,11 +38,13 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
 
   const renderPlan = (plan: Plan) => (
     <div className="price-box text-center" key={plan.id}>
-      <h4>{plan.plan_name}</h4>
-      <h2 className="price-main">
-        <span>$</span>
-        {plan.plan_amount}
-      </h2>
+      <div className="price-title-center">
+        <h4>{plan.plan_name}</h4>
+        <h2 className="price-main">
+          <span>$</span>
+          {plan.plan_amount}
+        </h2>
+      </div>
       <p>{plan.plan_description}</p>
       <a className="custom-btn buy-btn" onClick={handleScroll}>
         Buy Now
@@ -56,7 +58,6 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
         <div className="heading-fonts text-center">
           <h2>Our Plans</h2>
           <hr className="hr-line" />
-         
         </div>
       </div>
 

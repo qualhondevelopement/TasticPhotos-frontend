@@ -563,6 +563,9 @@ a {
 .not-found-heading {
   color: #3d9be9;
 }
+.swiper-pagination {
+  bottom: 0px !important;
+}
 
 @media screen and (max-width: 991px) {
   .photo-title {
