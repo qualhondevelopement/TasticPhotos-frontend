@@ -14,6 +14,7 @@ const useFetchData = (
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       const response = await axios({
         url,
         method,

@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/bootstrap.min.css";
+// import "./css/bootstrap.min.css";
 import "./css/style.css";
 import InstallBootStrap from "@/components/utils/InstallBootStrap";
 import Head from "next/head";
 import StoreProvider from "./StoreProvider";
-import Header from "@/components/Header/Header";
 import { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
 
 export const metadata: Metadata = {
   title: "Tastic Photo",
@@ -47,7 +44,6 @@ export default function RootLayout({
         <StoreProvider>
           <Toaster position="top-center" />
           <InstallBootStrap />
-          <Header />
           {children}
         </StoreProvider>
       </body>

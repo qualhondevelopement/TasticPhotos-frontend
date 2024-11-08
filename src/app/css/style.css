@@ -54,6 +54,15 @@
   font-display: swap;
 }
 
+/* Normalize.css */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: "DIN Next W1G";
   font-size: 18px;
@@ -69,6 +78,9 @@ header li .nav-link {
   font-weight: 600;
 }
 .checkout-btn {
+  margin: 0px 15px;
+}
+.myphoto-btn {
   margin: 0px 15px;
 }
 .custom-btn {
@@ -533,6 +545,29 @@ a {
   background-color: white;
   cursor: pointer;
 }
+.cart-btn-outer .form-check {
+  padding: 0;
+}
+.count-box {
+  padding: 0px;
+  background: #464747;
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  color: #fff !important;
+  margin: 0px 10px;
+}
+.count-box i {
+  font-style: normal;
+  position: relative;
+  top: 1px;
+}
+.btn-cart {
+  /* display: flex; */
+  align-items: center;
+}
 
 @media screen and (max-width: 1199px) {
   h2 {
@@ -650,7 +685,21 @@ a {
     font-size: 10px;
   }
   .navbar-brand img {
-    max-width: 100px;
+    max-width: 70px;
+  }
+  .navbar-custom .col-8 {
+    padding-right: 0;
+    width: 80%;
+  }
+  .navbar-custom .col-4 {
+    padding-left: 0;
+    width: 20%;
+  }
+  header li .nav-link img {
+    width: 20px;
+  }
+  .navbar-brand {
+    margin: 0;
   }
 
   .banner-content h2 {
@@ -659,6 +708,22 @@ a {
 
   .banner-content p {
     font-size: 1rem;
+  }
+  .navbar-nav .custom-btn {
+    padding: 10px 15px 8px 15px !important;
+    margin: 0px 5px 0 10px;
+  }
+  .cart-btn-outer {
+    flex-wrap: wrap;
+  }
+  .select-img-outer {
+    flex: 0 0 100%;
+    justify-content: end;
+    padding-right: 0 !important;
+    padding-bottom: 0px !important;
+  }
+  .count-box {
+    margin-right: 0;
   }
 }
 .slick-prev:hover:before,

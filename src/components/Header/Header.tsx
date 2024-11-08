@@ -1,26 +1,58 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import {} from "@/redux/cartSlice";
+import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
+import useFetchData from "@/custom-hook/useFetchData";
+import API_URLS from "@/customs/constant";
+import { setToggleGallery } from "@/redux/toggleGallerySlice";
 
-interface HeaderProps {}
-
-const Header: React.FC<HeaderProps> = () => {
+const Header = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const currentSlug = useSelector((state: any) => state.slug.currentSlug);
+  const galleryToggle = useSelector(
+    (state: any) => state.toggleGallery.toggleGallery
+  );
+
+  const newLoading = useSelector((state: any) => state.loading);
   const cartItemsCount = useSelector(
     (state: any) => state.cart.cartData?.photos?.length
   );
+
+  const { data, error, loading } = useFetchData(
+    API_URLS.GET_GALLARY(currentSlug),
+    "GET"
+  );
+
+  useEffect(() => {
+    if (currentSlug) {
+      // setToggleButton("GALLERY");
+      dispatch(setToggleGallery("GALLERY"));
+    } else {
+    }
+  }, [currentSlug]);
 
   const handleCartButton = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     event.preventDefault();
+    if (error) {
+    }
     router.push(`/cart-items/${currentSlug}`);
+  };
+
+  const handleGallery = () => {
+    router.push(`/${currentSlug}`);
+  };
+
+  const handleMyPhoto = () => {
+    if (window.location.pathname === "/") {
+      document.getElementById("target-section")?.scrollIntoView();
+    } else {
+      window.location.href = "/#target-section";
+    }
   };
 
   return (
@@ -43,6 +75,19 @@ const Header: React.FC<HeaderProps> = () => {
               <div className="col-8">
                 <div className="justify-content-end" id="collapsibleNavbar">
                   <ul className="navbar-nav justify-content-end">
+                    <li className="nav-item myphoto-btn">
+                      <a
+                        className="nav-link"
+                        onClick={
+                          galleryToggle === "MY PHOTO"
+                            ? handleMyPhoto
+                            : handleGallery
+                        }
+                      >
+                        {galleryToggle}
+                      </a>
+                    </li>
+
                     <li className="nav-item">
                       <a
                         className="nav-link"
@@ -51,24 +96,31 @@ const Header: React.FC<HeaderProps> = () => {
                         Contact
                       </a>
                     </li>
+
                     <li className="nav-item checkout-btn">
                       <a
                         className="nav-link custom-btn"
-                        onClick={() =>
-                          router.push(`/cart-items/${currentSlug}`)
-                        }
+                        onClick={() => {
+                          if (error) {
+                            router.push(`/cart`);
+                          } else {
+                            router.push(`/cart-items/${currentSlug}`);
+                          }
+                        }}
                       >
                         Checkout
                       </a>
                     </li>
+
                     <li
                       className="nav-item signup-btn"
                       style={{ position: "relative" }}
                     >
                       <a
                         className="nav-link"
-                        href="#"
-                        onClick={handleCartButton}
+                        onClick={(e) =>
+                          error ? router.push(`/cart`) : handleCartButton(e)
+                        }
                       >
                         <Image
                           src="/images/cart.svg"
@@ -77,7 +129,6 @@ const Header: React.FC<HeaderProps> = () => {
                           height={25}
                           style={{ position: "relative" }}
                         />
-
                         {cartItemsCount > 0 && (
                           <span className="cart-item-no">
                             <i>{cartItemsCount}</i>

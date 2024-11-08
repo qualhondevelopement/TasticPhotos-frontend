@@ -27,7 +27,6 @@ const CartItems: React.FC = () => {
 
   const dispatch = useDispatch();
   const stripe = useStripe();
-  const scrollTargetRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   // Redux state
   const loading = useSelector((state: any) => state.loading);
@@ -55,7 +54,6 @@ const CartItems: React.FC = () => {
       }
     } catch (error: any) {
       console.error("Payment failed:", error.message);
-      scrollTargetRef.current?.scrollIntoView({ behavior: "smooth" });
       toast.error(error.response?.data?.message || error.message, {
         id: "gh",
       });
@@ -95,13 +93,13 @@ const CartItems: React.FC = () => {
   return (
     <div>
       {!loading && cartItems?.photos?.length ? (
-        <>
+        <div>
           <section className="cart-banner">
             <h3 className="text-white">Shopping Cart</h3>
           </section>
           <div className="back-btn mt-5">
             <div className="container" onClick={handleGoBack}>
-              <a href="#" className="backbtn">
+              <a className="backbtn">
                 <IoIosArrowBack size={20} className="back-button" />
                 Back To Gallery
               </a>
@@ -162,7 +160,7 @@ const CartItems: React.FC = () => {
                   <div className="card rounded p-3 summary-cart">
                     <div className="d-flex justify-content-between mb-3">
                       <h4 className="mb-0">Summary</h4>
-                      <>
+                      <div>
                         {" "}
                         <span
                           className=" p-0 plan-button"
@@ -176,7 +174,7 @@ const CartItems: React.FC = () => {
                           handleClose={() => setPlanModalShow(false)}
                           handleModalClick={() => setPlanModalShow(false)}
                         />
-                      </>
+                      </div>
                     </div>
                     <div className="d-flex justify-content-between mb-2 items-outer">
                       <div>ITEMS</div>
@@ -203,7 +201,7 @@ const CartItems: React.FC = () => {
               </div>
             </div>
           </section>
-        </>
+        </div>
       ) : (
         !loading && <EmptyCart />
       )}

@@ -1,9 +1,10 @@
+"use client";
 import React from "react";
-import CartSvg from "../Payment/CartSvg";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import CartSvg from "@/components/Payment/CartSvg";
 
-const EmptyCart = () => {
+const page = () => {
   const router = useRouter();
   const id = useSelector((state: any) => state.slug.currentSlug);
 
@@ -36,4 +37,4 @@ const EmptyCart = () => {
   );
 };
 
-export default EmptyCart;
+export default page;

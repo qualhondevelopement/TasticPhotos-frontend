@@ -6,6 +6,8 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { useDispatch } from "react-redux";
+import { setLoading } from "@/redux/loadingSlice";
 
 type Plan = {
   id: string;
@@ -20,16 +22,23 @@ type PlansProps = {
 
 const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
   const [data, setData] = useState<Plan[]>([]);
+  const [loading, setLoadingState] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchPlans = async () => {
       try {
+        dispatch(setLoading(true));
+        setLoadingState(true);
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-package-data/`
         );
         setData(response.data.data);
       } catch (error: any) {
         console.error("Error fetching plans:", error.message || error);
+      } finally {
+        dispatch(setLoading(false));
+        setLoadingState(false);
       }
     };
 
@@ -52,54 +61,65 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
     </div>
   );
 
-  return (
-    <div className="row justify-content-center">
-      <div className="col-md-12">
-        <div className="heading-fonts text-center">
-          <h2>Our Plans</h2>
-          <hr className="hr-line" />
-        </div>
-      </div>
+  // const renderSkeleton = () => (
+  //   <div
+  //     className="price-box text-center skeleton"
+  //     key={`skeleton-${Math.random()}`}
+  //   >
+  //     <div className="price-title-center"></div>
+  //   </div>
+  // );
 
-      {data.length > 2 ? (
-        <Swiper
-          slidesPerView={3}
-          spaceBetween={30}
-          pagination={{ clickable: true }}
-          navigation={true}
-          breakpoints={{
-            0: {
-              slidesPerView: 1,
-              spaceBetween: 10,
-            },
-            640: {
-              slidesPerView: 1,
-              spaceBetween: 10,
-            },
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 20,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 30,
-            },
-          }}
-          modules={[Pagination, Navigation]}
-        >
-          {data.map((plan) => (
-            <SwiperSlide key={plan.id}>{renderPlan(plan)}</SwiperSlide>
-          ))}
-        </Swiper>
-      ) : (
-        <div className="col-md-12 d-flex flex-wrap justify-content-center">
-          {data.map((plan) => (
-            <div className="col-lg-5 col-md-6" key={plan.id}>
-              {renderPlan(plan)}
-            </div>
-          ))}
+  return (
+    <div>
+      <div className="row justify-content-center">
+        <div className="col-md-12">
+          <div className="heading-fonts text-center">
+            <h2>Our Plans</h2>
+            <hr className="hr-line" />
+          </div>
         </div>
-      )}
+
+        {data.length > 2 ? (
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={30}
+            pagination={{ clickable: true }}
+            navigation={true}
+            breakpoints={{
+              0: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+              },
+              640: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+            }}
+            modules={[Pagination, Navigation]}
+          >
+            {data.map((plan) => (
+              <SwiperSlide key={plan.id}>{renderPlan(plan)}</SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <div className="col-md-12 d-flex flex-wrap justify-content-center">
+            {data.map((plan) => (
+              <div className="col-lg-5 col-md-6" key={plan.id}>
+                {renderPlan(plan)}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

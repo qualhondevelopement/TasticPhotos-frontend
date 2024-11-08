@@ -12,7 +12,7 @@ const Contact = () => {
   };
 
   return (
-    <>
+    <div>
       <section className="cart-banner">
         <h3 className="text-white">Contact Us</h3>
       </section>{" "}
@@ -23,11 +23,18 @@ const Contact = () => {
               <h3 className=" contact-header">Contact Information</h3>
               <div className="d-flex align-items-center mt-5 contact-phone">
                 <FiPhoneCall color="#0d6efd" className="me-2" />
-                <span className="contact-textdecoration">Phone: <a href="tel:+12075387568">(207) 538-7568</a></span>
+                <span className="contact-textdecoration">
+                  Phone: <a href="tel:+12075387568">(207) 538-7568</a>
+                </span>
               </div>
               <div className="d-flex align-items-center mt-3 mb-3">
                 <HiOutlineMail color="#0d6efd" className="me-2" />
-                <span className="contact-textdecoration">Email: <a href="mailto:contact@tasticphoto.com">Contact@tasticphoto.com</a></span>
+                <span className="contact-textdecoration">
+                  Email:{" "}
+                  <a href="mailto:contact@tasticphoto.com">
+                    Contact@tasticphoto.com
+                  </a>
+                </span>
               </div>
               {/* <div className="d-flex align-items-center">
                 <LiaAddressCardSolid color="#0d6efd" className="me-2" />
@@ -75,7 +82,7 @@ const Contact = () => {
           </Row>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

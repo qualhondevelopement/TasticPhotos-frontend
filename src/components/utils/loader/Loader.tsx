@@ -1,6 +1,6 @@
 "use client";
-import { PropagateLoader, SyncLoader } from "react-spinners";
-import "./loader.css"
+import { SyncLoader } from "react-spinners";
+import "./loader.css";
 function Loader() {
   return (
     <div className="modal-overlay">

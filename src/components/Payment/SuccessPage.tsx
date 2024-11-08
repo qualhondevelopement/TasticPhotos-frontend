@@ -61,7 +61,7 @@ const PaymentSuccess = () => {
                 <PaymentLoader />
               </div>
             ) : zipUrl ? (
-              <>
+              <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -96,7 +96,7 @@ const PaymentSuccess = () => {
                     Back To Home
                   </a>
                 </div>
-              </>
+              </div>
             ) : (
               <div className="btn-cart mt-3">
                 <p>Something went wrong. Please try again.</p>

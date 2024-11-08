@@ -1,4 +1,5 @@
 "use client";
+import Header from "@/components/Header/Header";
 import Loader from "@/components/utils/loader/Loader";
 import useCartItem from "@/custom-hook/useCartItem";
 import usePreventActions from "@/custom-hook/useRestriction";
@@ -19,7 +20,9 @@ export default function RootLayout({
   const router = useRouter();
   const dispatch = useDispatch();
   const { slug } = useCartItem();
-
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
   useEffect(() => {
     if (slug == "null") {
       router.push(`/`);
@@ -32,9 +35,12 @@ export default function RootLayout({
   useEffect(() => {
     //usePreventActions();
   }, []);
+  // console.log(isloading);
   return (
     <div>
       {isloading && <Loader />}
+      <Header />
+
       {children}
     </div>
   );

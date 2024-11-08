@@ -61,17 +61,12 @@ const Body: React.FC<BodyProps> = () => {
       // Show toast if it's a new error message
       if (errorMessage && previousError.current !== errorMessage) {
         previousError.current = errorMessage;
-        toast.error(errorMessage, {
-          id: `gallery-error-${errorMessage}`,
-        });
-
-        // Delay the redirection slightly to ensure toast is shown
-        setTimeout(() => {
-          router.push("/");
-        }, 1000); // Adjust delay as needed
+        // toast.error(errorMessage, {
+        //   id: `gallery-error-${errorMessage}`,
+        // });
+        router.push("/");
       }
     } else {
-      // Reset previous error when there's no error
       previousError.current = null;
     }
   }, [error, router]);
@@ -84,7 +79,7 @@ const Body: React.FC<BodyProps> = () => {
   }, [allCartData]);
 
   const handleScroll = () => {
-    scrollTargetRef.current?.scrollIntoView({ behavior: "smooth" });
+    scrollTargetRef.current?.scrollIntoView();
   };
 
   const handleSelectImage = (imageId: string, isChecked: boolean) => {
@@ -177,11 +172,21 @@ const Body: React.FC<BodyProps> = () => {
       <section className="locations-sec">
         <div className="container ">
           <Plans handleScroll={handleScroll} />
+
           <hr className="line-grey" />
           <div className="row" ref={scrollTargetRef}>
             {locationName && locationName !== "undefined" ? (
               <div className="col-md-12">
                 <div className="cart-btn-outer mb-3">
+                  {selectedImages.length > 0 && (
+                    <div className="d-flex align-items-center p-2 select-img-outer">
+                      <span className=" ">Selected Images:</span>
+                      <span className="badge rounded-pill fs-6 text-black count-box">
+                        <i> {selectedImages.length}</i>
+                      </span>
+                    </div>
+                  )}
+
                   <div className="form-check">
                     <input
                       className="form-check-input"
@@ -213,7 +218,7 @@ const Body: React.FC<BodyProps> = () => {
 
             {!loading &&
               locationName?.map((locationData: any, index: any) => (
-                <>
+                <div>
                   <ImageCard
                     key={index}
                     title={locationData.name}
@@ -224,16 +229,23 @@ const Body: React.FC<BodyProps> = () => {
                   {index < locationName.length - 1 && (
                     <hr className="line-grey" />
                   )}
-                </>
+                </div>
               ))}
             <div className="col-md-12">
-              <div className="cart-btn-outer">
-                <div className="btn-cart mt-2">
-                  {locationName && locationName !== "undefined" ? (
-                    <a className="custom-btn" onClick={handleAddCart}>
-                      Add to cart
-                    </a>
-                  ) : null}
+              <div className="cart-btn-outer mb-3">
+                {selectedImages.length > 0 && (
+                  <div className="d-flex align-items-center p-2 select-img-outer">
+                    <span className=" ">Selected Images:</span>
+                    <span className="badge rounded-pill fs-6 text-black count-box">
+                      <i> {selectedImages.length}</i>
+                    </span>
+                  </div>
+                )}
+
+                <div className="btn-cart">
+                  <a className="custom-btn" onClick={handleAddCart}>
+                    Add to cart
+                  </a>
                 </div>
               </div>
             </div>
