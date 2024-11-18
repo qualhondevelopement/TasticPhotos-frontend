@@ -7,24 +7,18 @@ import Plans from "@/components/Body/Plans/Plans";
 import Header from "@/components/Header/Header";
 import { useSelector } from "react-redux";
 import Loader from "@/components/utils/loader/Loader";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  restoreScrollPosition,
-  saveScrollPosition,
-} from "@/components/utils/scrollManagement";
+import { useEffect } from "react";
 
 export default function Home() {
-  const handleScroll = () => {};
   const isloading = useSelector((state: any) => state.loading);
   const router = useRouter();
-
+  const handleScroll = () => {};
   return (
     <div>
       {isloading && <Loader />}
       <div>
         <Header />
-
         <Banner />
         <div className="locations-sec">
           <div className="container">
@@ -33,7 +27,6 @@ export default function Home() {
           <div className="find-photo-section">
             <HomeBanner />
           </div>
-
           <div>
             <DefaultHome />
           </div>

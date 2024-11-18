@@ -97,8 +97,8 @@ const CartItems: React.FC = () => {
           <section className="cart-banner">
             <h3 className="text-white">Shopping Cart</h3>
           </section>
-          <div className="back-btn mt-5">
-            <div className="container" onClick={handleGoBack}>
+          <div className="back-btn mt-5" onClick={handleGoBack}>
+            <div className="container">
               <a className="backbtn">
                 <IoIosArrowBack size={20} className="back-button" />
                 Back To Gallery
@@ -138,11 +138,11 @@ const CartItems: React.FC = () => {
                         </div>
                       ))}
                       {/* Add a plus button for adding more images */}
-                      <div className="col-xl-3 col-lg-4 col-sm-6">
-                        <div
-                          className="custom-add-button"
-                          onClick={() => router.push(`/${currentSlug}`)}
-                        >
+                      <div
+                        className="col-xl-3 col-lg-4 col-sm-6"
+                        onClick={() => router.push(`/${currentSlug}`)}
+                      >
+                        <div className="custom-add-button">
                           <span className="display-4 text-muted">+</span>
                         </div>
                       </div>

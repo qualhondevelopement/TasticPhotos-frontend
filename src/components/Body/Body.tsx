@@ -34,25 +34,23 @@ const Body: React.FC<BodyProps> = () => {
     fetcher
   );
 
-  console.log(locationName, "name");
+  // console.log(locationName, "name");
 
   useEffect(() => {
-    console.log("here");
+    // console.log("here");
     if (!locationName) return;
     const totalEntries = locationName.reduce(
       (count: any, item: any) => count + Object.keys(item.data).length,
       0
     );
-    console.log(totalEntries, "toalss");
+    // console.log(totalEntries, "cart data");
+    // console.log(selectedImages.length, "selected images");
     if (selectedImages.length == totalEntries) {
-      console.log(selectedImages.length);
-      console.log(allCartData?.photos?.length);
-
       setAllImageChecked(true);
     } else {
       setAllImageChecked(false);
     }
-  }, [locationName]);
+  }, [locationName, selectedImages]);
 
   useEffect(() => {
     if (error) {

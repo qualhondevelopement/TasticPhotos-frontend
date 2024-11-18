@@ -7,14 +7,15 @@ import Image from "next/image";
 import useFetchData from "@/custom-hook/useFetchData";
 import API_URLS from "@/customs/constant";
 import { setToggleGallery } from "@/redux/toggleGallerySlice";
+import Loader from "../utils/loader/Loader";
 
 const Header = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const currentSlug = useSelector((state: any) => state.slug.currentSlug);
-  const galleryToggle = useSelector(
-    (state: any) => state.toggleGallery.toggleGallery
-  );
+  // const galleryToggle = useSelector(
+  //   (state: any) => state.toggleGallery.toggleGallery
+  // );
 
   const newLoading = useSelector((state: any) => state.loading);
   const cartItemsCount = useSelector(
@@ -26,19 +27,20 @@ const Header = () => {
     "GET"
   );
 
-  useEffect(() => {
-    if (currentSlug) {
-      // setToggleButton("GALLERY");
-      dispatch(setToggleGallery("GALLERY"));
-    } else {
-    }
-  }, [currentSlug]);
+  // useEffect(() => {
+  //   if (currentSlug) {
+  //     // setToggleButton("GALLERY");
+  //     dispatch(setToggleGallery("GALLERY"));
+  //   } else {
+  //   }
+  // }, [currentSlug]);
 
   const handleCartButton = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     event.preventDefault();
     if (error) {
+      router.push("/");
     }
     router.push(`/cart-items/${currentSlug}`);
   };
@@ -54,7 +56,9 @@ const Header = () => {
       window.location.href = "/#target-section";
     }
   };
-
+  // if (loading) {
+  //   return <Loader />;
+  // }
   return (
     <header>
       <div className="container position-sticky">
@@ -78,13 +82,9 @@ const Header = () => {
                     <li className="nav-item myphoto-btn">
                       <a
                         className="nav-link"
-                        onClick={
-                          galleryToggle === "MY PHOTO"
-                            ? handleMyPhoto
-                            : handleGallery
-                        }
+                        onClick={error ? handleMyPhoto : handleGallery}
                       >
-                        {galleryToggle}
+                        MY PHOTOS{" "}
                       </a>
                     </li>
 

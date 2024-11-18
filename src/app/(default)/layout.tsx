@@ -14,7 +14,7 @@ export default function RootLayout({
   // useEffect(() => {
   //   window.scrollTo(0, 0);
   // }, []);
-  console.log(isloading);
+  // console.log(isloading);
   return (
     <div>
       {/* {!isloading && <Loader />} */}

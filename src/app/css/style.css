@@ -711,19 +711,30 @@ a {
   }
   .navbar-nav .custom-btn {
     padding: 10px 15px 8px 15px !important;
-    margin: 0px 5px 0 10px;
+    margin: 0px 3px 0 6px;
   }
   .cart-btn-outer {
     flex-wrap: wrap;
   }
   .select-img-outer {
     flex: 0 0 100%;
-    justify-content: end;
-    padding-right: 0 !important;
-    padding-bottom: 0px !important;
+    justify-content: center;
+    position: fixed;
+    background: #fff;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid #ccc;
+    z-index: 11;
+    padding: 5px 0px !important;
   }
   .count-box {
     margin-right: 0;
+  }
+  .cart-item-no {
+    font-size: 10px;
+    width: 20px;
+    height: 20px;
   }
 }
 .slick-prev:hover:before,
