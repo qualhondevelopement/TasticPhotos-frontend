@@ -1,6 +1,7 @@
 "use client";
+import LightBoxModal from "@/components/Modals/LightBoxModal";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -21,6 +22,18 @@ const ImageCard: React.FC<ImageCardProps> = ({
   onSelectImage,
   selectedImages,
 }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalImage, setModalImage] = useState("");
+  const [caption, setCaption] = useState("");
+
+  const handleImageClick = (src: string, alt: string) => {
+    setModalImage(src);
+    setCaption(alt);
+    setShowModal(true);
+  };
+
+  const handleClose = () => setShowModal(false);
+
   return (
     <div className="col-md-12">
       <div className="heading-fonts">
@@ -33,7 +46,12 @@ const ImageCard: React.FC<ImageCardProps> = ({
             ([id, src]: [string, string], index: number) => (
               <div className="col-lg-4 col-md-6" key={id}>
                 <div className="images-main">
-                  <img src={src} alt={`Image ${id}`} className="w-100" />
+                  <img
+                    src={src}
+                    alt={`Image ${id}`}
+                    className="w-100 img-fluid"
+                    onClick={() => handleImageClick(src, `Image ${id}`)}
+                  />
                   <div className="input11">
                     <input
                       type="checkbox"
@@ -47,6 +65,15 @@ const ImageCard: React.FC<ImageCardProps> = ({
             )
           )}
       </div>
+
+      {showModal && (
+        <LightBoxModal
+          show={showModal}
+          imageSrc={modalImage}
+          caption={caption}
+          onClose={handleClose}
+        />
+      )}
     </div>
   );
 };
