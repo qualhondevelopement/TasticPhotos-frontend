@@ -50,7 +50,7 @@ const DefaultHome = () => {
       formData.append("image", imageFile);
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}api/find-gallery-by-face/`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/find-gallery-by-face/`,
         formData
       );
       if (response.data.success) {
