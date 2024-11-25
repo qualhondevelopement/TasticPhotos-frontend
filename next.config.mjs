@@ -1,7 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["www.dropbox.com", "tastic.s3.amazonaws.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.dropbox.com",
+      },
+      {
+        protocol: "https",
+        hostname: "tastic.s3.amazonaws.com",
+      },
+      {
+        protocol: "http",
+        hostname: "10.10.0.254",
+      },
+    ],
   },
 };
 

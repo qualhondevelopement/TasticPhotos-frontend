@@ -126,6 +126,8 @@ const CartItems: React.FC = () => {
                               alt="Thumbnail"
                               fill
                               style={{ objectFit: "cover" }}
+                              // blurDataURL="/images/img-1.webp"
+                              // placeholder="blur"
                             />
                             <div className="input12">
                               <input

@@ -8,6 +8,7 @@ import Loader from "../utils/loader/Loader";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/redux/loadingSlice";
+import Image from "next/image";
 ("@/customs/constant");
 const Banner = () => {
   const [bannerImage, setBannerImage] = useState<string>("");
@@ -31,7 +32,15 @@ const Banner = () => {
         <div className="skeleton"></div>
       ) : (
         // <Loader />
-        <img src={bannerImage} alt="Banner" className="w-100" />
+        <img
+          src={bannerImage}
+          alt="Banner"
+          className="w-100"
+          // style={{
+          //   width: "100%",
+          //   height: "auto",
+          // }}
+        />
       )}
     </section>
   );

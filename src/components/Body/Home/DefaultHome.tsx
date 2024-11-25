@@ -18,6 +18,7 @@ const DefaultHome = () => {
   const loading = useSelector((state: any) => state.loading);
   const dispatch = useDispatch();
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [errorMssg, setErrorMssg] = useState(null);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -35,6 +36,7 @@ const DefaultHome = () => {
 
     setImageName("Click to Upload Image");
     setImage(false);
+    setErrorMssg(null);
   };
   // console.log(loading);
 
@@ -59,11 +61,11 @@ const DefaultHome = () => {
         router.push(response.data.url);
       }
 
-      console.log("Response:", response.data);
+      // console.log("Response:", response.data);
     } catch (error: any) {
       dispatch(setLoading(false));
-
-      toast.error(error.response.data.error);
+      setErrorMssg(error.response.data.error);
+      // toast.error(error.response.data.error);
       console.error("Error uploading image:", error.response.data.error);
     }
   };
@@ -104,6 +106,14 @@ const DefaultHome = () => {
                 )}
               </div>
             </div>
+            {errorMssg && (
+              <div className="p-2">
+                <span className="text-danger " role="alert">
+                  {errorMssg}
+                </span>
+              </div>
+            )}
+
             <div
               className="btn-search-outer mt-3"
               id="target-section"
