@@ -61,7 +61,7 @@ const Header = () => {
   // }
   return (
     <header>
-      <div className="container position-sticky">
+      <div className=" position-sticky">
         <nav className="navbar-custom">
           <div className="container">
             <div className="row align-items-center">
