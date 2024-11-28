@@ -243,11 +243,12 @@ p {
 }
 .images-main {
   position: relative;
-  background: linear-gradient(
+  background: #464747;
+  /* background: linear-gradient(
     to bottom,
     rgb(0 0 0 / 51%) 0%,
     rgb(255 255 255 / 0%) 100%
-  );
+  ); */
 }
 .input11 {
   position: absolute;
@@ -262,7 +263,7 @@ p {
   border-color: #3d9be9;
 }
 .images-main img {
-  aspect-ratio: 16 / 8;
+  aspect-ratio: 16 / 12;
   object-fit: contain;
 }
 .row-marg .col-md-6 {
@@ -604,7 +605,7 @@ a {
 
 .modal-close {
   position: absolute;
-  top: -15px;
+  top: 15px;
   right: 10px;
   color: #000;
   cursor: pointer !important;
@@ -615,7 +616,7 @@ a {
   height: 35px;
   width: 35px;
   outline: none;
-  right: -15px;
+  right: 15px;
   transition: 0.3s all ease-in-out;
 }
 
@@ -807,6 +808,16 @@ a {
     font-size: 10px;
     width: 20px;
     height: 20px;
+  }
+  .slider-img-zoom .swiper-button-prev,
+  .slider-img-zoom .swiper-button-next {
+    background: #f5f5f5;
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .slider-img-zoom .swiper-button-prev:after,
+  .slider-img-zoom .swiper-button-next:after {
+    font-size: 14px !important;
   }
 }
 .slick-prev:hover:before,

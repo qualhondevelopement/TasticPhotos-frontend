@@ -34,8 +34,7 @@ const Body: React.FC<BodyProps> = () => {
     fetcher
   );
 
-  // console.log(locationName, "name");
-
+  // console.log("locataion data", locationName);
   useEffect(() => {
     // console.log("here");
     if (!locationName) return;

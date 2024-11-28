@@ -23,14 +23,24 @@ const ImageCard: React.FC<ImageCardProps> = ({
   selectedImages,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const [modalImage, setModalImage] = useState("");
+  // const [modalImage, setModalImage] = useState("");
+  const [modalImages, setModalImages] = useState<string[]>([]); // List of images
+  const [initialIndex, setInitialIndex] = useState<number>(0); // Initial index for the Swiper
+
   const [caption, setCaption] = useState("");
 
-  const handleImageClick = (src: string, alt: string) => {
-    setModalImage(src);
-    setCaption(alt);
+  const handleImageClick = (src: string, index: number) => {
+    if (data) {
+      // Convert the data object to an array of image URLs
+      const imageList = Object.values(data);
+
+      // Set modal images and initial slide index
+      setModalImages(imageList);
+      setInitialIndex(index);
+    }
     setShowModal(true);
   };
+  console.log("image data", data);
 
   const handleClose = () => setShowModal(false);
 
@@ -50,7 +60,7 @@ const ImageCard: React.FC<ImageCardProps> = ({
                     src={src}
                     alt={`Image ${id}`}
                     className="w-100 img-fluid"
-                    onClick={() => handleImageClick(src, `Image ${id}`)}
+                    onClick={() => handleImageClick(src, index)}
                   />
                   <div className="input11">
                     <input
@@ -69,8 +79,8 @@ const ImageCard: React.FC<ImageCardProps> = ({
       {showModal && (
         <LightBoxModal
           show={showModal}
-          imageSrc={modalImage}
-          caption={caption}
+          images={modalImages}
+          initialIndex={initialIndex}
           onClose={handleClose}
         />
       )}
