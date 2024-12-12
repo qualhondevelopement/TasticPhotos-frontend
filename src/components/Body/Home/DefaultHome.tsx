@@ -32,8 +32,11 @@ const DefaultHome = () => {
 
   const handleImageRemove = (event: React.MouseEvent) => {
     event.stopPropagation();
+    const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = "";
+    }
     setImageFile(null);
-
     setImageName("Click to Upload Image");
     setImage(false);
     setErrorMssg(null);
