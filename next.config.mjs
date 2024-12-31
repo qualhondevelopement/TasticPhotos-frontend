@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: "http",
         hostname: "10.10.0.254",
       },
+      {
+        protocol: "https",
+        hostname: "tastic-auto-uploads.s3.amazonaws.com",
+      },
     ],
   },
 };

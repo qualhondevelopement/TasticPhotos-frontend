@@ -118,13 +118,13 @@ const CartItems: React.FC = () => {
                           className="col-xl-3 col-lg-4 col-sm-6"
                         >
                           <div className="cart-images-outer">
-                            <Image
+                            <img
                               className="img-fluid rounded"
                               src={
                                 item.photo_thumbnail_url || "/images/img-1.webp"
                               }
                               alt="Thumbnail"
-                              fill
+                              // fill
                               style={{ objectFit: "cover" }}
                               // blurDataURL="/images/img-1.webp"
                               // placeholder="blur"

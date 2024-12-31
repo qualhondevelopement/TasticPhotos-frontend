@@ -1,5 +1,6 @@
 "use client";
 
+import { setCartData } from "@/redux/cartSlice";
 import { setLoading } from "@/redux/loadingSlice";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -60,7 +61,7 @@ const DefaultHome = () => {
       );
       if (response.data.success) {
         dispatch(setLoading(false));
-
+        dispatch(setCartData(null));
         router.push(response.data.url);
       }
 
