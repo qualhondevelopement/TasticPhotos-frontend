@@ -58,9 +58,9 @@ const Body: React.FC<BodyProps> = () => {
       // Show toast if it's a new error message
       if (errorMessage && previousError.current !== errorMessage) {
         previousError.current = errorMessage;
-        // toast.error(errorMessage, {
-        //   id: `gallery-error-${errorMessage}`,
-        // });
+        toast.error(errorMessage, {
+          id: `gallery-error-${errorMessage}`,
+        });
         router.push("/");
       }
     } else {
