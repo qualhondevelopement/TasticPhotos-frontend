@@ -228,7 +228,7 @@ p {
   cursor: pointer;
 }
 .input11 input + span {
-  background: #fff;
+  background: #3d9be9;
   background-size: 100%;
   width: 30px;
   height: 30px;
@@ -237,8 +237,18 @@ p {
   right: 5px;
   border-radius: 30px;
 }
-.input11 input:checked + span {
+/* .input11 input:checked + span {
   background: url(../../../public/images/check.png) 0 0 no-repeat;
+  background-size: 100%;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border-radius: 30px;
+} */
+.input11 input:checked + span {
+  background: url(../../../public/images/checkblue.png) 0 0 no-repeat;
   background-size: 100%;
   width: 30px;
   height: 30px;
@@ -650,8 +660,9 @@ a {
 
 .upload-container {
   width: 229px;
-  padding-left: 0 !important;
-  padding-right: 0px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  word-break: break-word;
 }
 .qrcode-outer {
   flex-direction: column;
@@ -681,6 +692,28 @@ a {
   background: #fff;
   padding: 0px 5px;
   border-radius: 2px;
+}
+
+.customer-modal .modal-header {
+  background-color: #3f4c57;
+  color: white;
+}
+
+.customer-modal .modal-body {
+  padding: 1.5rem;
+}
+
+.customer-modal .btn {
+  background-color: #3d9be9;
+  border: none;
+}
+
+.customer-modal .btn-outline-secondary {
+  border: 1px solid #3f4c57;
+}
+
+.customer-modal .modal-backdrop {
+  z-index: 1050 !important;
 }
 @media screen and (max-width: 1199px) {
   h2 {

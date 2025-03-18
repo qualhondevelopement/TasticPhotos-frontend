@@ -1,11 +1,11 @@
 "use client";
 
-import StripeCart from "@/components/Carts/CartItems";
+import CartItems from "@/components/Carts/CartItems";
 
 export default function Page() {
   return (
     <div>
-      <StripeCart />
+      <CartItems />
     </div>
   );
 }

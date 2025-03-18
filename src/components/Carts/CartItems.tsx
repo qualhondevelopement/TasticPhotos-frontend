@@ -16,17 +16,23 @@ import { useRouter } from "next/navigation";
 import PlansModal from "../Body/Plans/PlansModal";
 import { FcInfo } from "react-icons/fc";
 import { IoIosArrowBack, IoMdArrowRoundBack } from "react-icons/io";
+import CustomerFormModel from "./CustomerFormModel";
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string);
-
+// const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string);
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+}
 const CartItems: React.FC = () => {
   const [modalShow, setModalShow] = useState<boolean>(false);
   const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null);
-
+  const [isPaymentFormOpen, setIsPaymentFormOpen] = useState<boolean>(false);
   const [planModalShow, setPlanModalShow] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const stripe = useStripe();
+  // const stripe = useStripe();
   const router = useRouter();
   // Redux state
   const loading = useSelector((state: any) => state.loading);
@@ -35,30 +41,30 @@ const CartItems: React.FC = () => {
 
   const paymentId = currentSlug;
 
-  const handlePayment = async () => {
-    const paymentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/payments/create-checkout-session/?qr_id=${paymentId}`;
+  // const handlePayment = async () => {
+  //   const paymentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/payments/create-checkout-session/?qr_id=${paymentId}`;
 
-    try {
-      const { data } = await axios.get(paymentUrl);
-      if (data && stripe) {
-        const { sessionId } = data;
-        const result = await stripe.redirectToCheckout({ sessionId });
+  //   try {
+  //     const { data } = await axios.get(paymentUrl);
+  //     if (data && stripe) {
+  //       const { sessionId } = data;
+  //       const result = await stripe.redirectToCheckout({ sessionId });
 
-        if (result.error) {
-          console.error("Stripe Checkout error:", result.error.message);
-        }
-      } else {
-        throw new Error(
-          "Failed to create a payment session. Please try again."
-        );
-      }
-    } catch (error: any) {
-      console.error("Payment failed:", error.message);
-      toast.error(error.response?.data?.message || error.message, {
-        id: "gh",
-      });
-    }
-  };
+  //       if (result.error) {
+  //         console.error("Stripe Checkout error:", result.error.message);
+  //       }
+  //     } else {
+  //       throw new Error(
+  //         "Failed to create a payment session. Please try again."
+  //       );
+  //     }
+  //   } catch (error: any) {
+  //     console.error("Payment failed:", error.message);
+  //     toast.error(error.response?.data?.message || error.message, {
+  //       id: "gh",
+  //     });
+  //   }
+  // };
 
   const handleRemove = async (photoId: string) => {
     const qrId = currentSlug;
@@ -88,6 +94,43 @@ const CartItems: React.FC = () => {
   };
   const handleGoBack = () => {
     router.push(`/${currentSlug}`);
+  };
+
+  const openPaymentFormModal = () => setIsPaymentFormOpen(true);
+  const closePaymentFormModal = () => setIsPaymentFormOpen(false);
+
+  const handleFormSubmit = async (data: FormData) => {
+    console.log("Form submitted with data:", data);
+
+    const paymentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/payments/create-checkout-session/`;
+
+    try {
+      console.log("Requesting checkout URL from:", paymentUrl);
+
+      const response = await axios.post(paymentUrl, {
+        qr_id: paymentId,
+        email: data.email,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        phone_number: data.phone,
+      });
+
+      const responseData = response.data;
+      console.log("Response data:", responseData);
+
+      if (responseData && responseData.checkout_url) {
+        console.log("Redirecting to:", responseData.checkout_url);
+        window.open(responseData.checkout_url, "_blank");
+      } else {
+        console.error("No checkout URL in response:", responseData);
+        toast.error("Payment initialization failed: No checkout URL received");
+      }
+    } catch (error: any) {
+      console.error("Payment failed:", error);
+      toast.error(error.response?.data?.message || error.message, {
+        id: "gh",
+      });
+    }
   };
 
   return (
@@ -193,11 +236,18 @@ const CartItems: React.FC = () => {
                     <div className="d-flex justify-content-center mt-3">
                       <a
                         className="custom-btn d-flex align-items-center w-100 justify-content-center"
-                        onClick={handlePayment}
+                        onClick={openPaymentFormModal}
                       >
                         CHECKOUT
                       </a>
                     </div>
+                    {isPaymentFormOpen && (
+                      <CustomerFormModel
+                        isOpen={isPaymentFormOpen}
+                        onClose={closePaymentFormModal}
+                        onSubmitSuccess={handleFormSubmit}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -211,10 +261,12 @@ const CartItems: React.FC = () => {
   );
 };
 
-const StripeCart = () => (
-  <Elements stripe={stripePromise}>
-    <CartItems />
-  </Elements>
-);
+export default CartItems;
 
-export default StripeCart;
+// const StripeCart = () => (
+//   <Elements stripe={stripePromise}>
+//     <CartItems />
+//   </Elements>
+// );
+
+// export default StripeCart;

@@ -58,9 +58,9 @@ const Body: React.FC<BodyProps> = () => {
       // Show toast if it's a new error message
       if (errorMessage && previousError.current !== errorMessage) {
         previousError.current = errorMessage;
-        toast.error(errorMessage, {
-          id: `gallery-error-${errorMessage}`,
-        });
+        // toast.error(errorMessage, {
+        //   id: `gallery-error-${errorMessage}`,
+        // });
         router.push("/");
       }
     } else {
@@ -172,7 +172,9 @@ const Body: React.FC<BodyProps> = () => {
 
           <hr className="line-grey" />
           <div className="row" ref={scrollTargetRef}>
-            {locationName && locationName !== "undefined" ? (
+            {locationName &&
+            locationName !== "undefined" &&
+            locationName.length != 0 ? (
               <div className="col-md-12">
                 <div className="cart-btn-outer mb-3">
                   {selectedImages.length > 0 && (
@@ -228,24 +230,26 @@ const Body: React.FC<BodyProps> = () => {
                   )}
                 </div>
               ))}
-            <div className="col-md-12">
-              <div className="cart-btn-outer mb-3">
-                {selectedImages.length > 0 && (
-                  <div className="d-flex align-items-center p-2 select-img-outer">
-                    <span className=" ">Selected Images:</span>
-                    <span className="badge rounded-pill fs-6 text-black count-box">
-                      <i> {selectedImages.length}</i>
-                    </span>
-                  </div>
-                )}
+            {locationName && locationName.length != 0 && (
+              <div className="col-md-12">
+                <div className="cart-btn-outer mb-3">
+                  {selectedImages.length > 0 && (
+                    <div className="d-flex align-items-center p-2 select-img-outer">
+                      <span className=" ">Selected Images:</span>
+                      <span className="badge rounded-pill fs-6 text-black count-box">
+                        <i> {selectedImages.length}</i>
+                      </span>
+                    </div>
+                  )}
 
-                <div className="btn-cart">
-                  <a className="custom-btn" onClick={handleAddCart}>
-                    Add to cart
-                  </a>
+                  <div className="btn-cart">
+                    <a className="custom-btn" onClick={handleAddCart}>
+                      Add to cart
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>

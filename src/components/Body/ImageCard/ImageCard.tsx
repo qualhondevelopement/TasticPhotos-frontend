@@ -40,7 +40,6 @@ const ImageCard: React.FC<ImageCardProps> = ({
     }
     setShowModal(true);
   };
-  console.log("image data", data);
 
   const handleClose = () => setShowModal(false);
 

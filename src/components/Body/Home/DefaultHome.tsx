@@ -65,6 +65,7 @@ const DefaultHome = () => {
         if (response.data.success) {
           dispatch(setLoading(false));
           dispatch(setCartData(null));
+          console.log(response);
           router.push(response.data.url);
         }
 
@@ -76,13 +77,24 @@ const DefaultHome = () => {
         console.error("Error uploading image:", error.response.data.error);
       }
     } else if (qrCode.trim()) {
-      console.log("QR Code Entered:", qrCode);
-      router.push(`/${qrCode}`);
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-gallery/?qr_id=${qrCode}`
+        );
+        dispatch(setCartData(null));
+        router.push(`/${qrCode}`);
+      } catch (error: any) {
+        setErrorMssg(error.response?.data?.message || "QR code not found.");
+        console.error("Error fetching gallery:", error.response?.data?.error);
+      }
     } else {
       toast.error("Please upload an image or enter a QR code.", {
         id: "search-error",
       });
     }
+  };
+  const handleQrCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQrCode(e.target.value.trim());
   };
 
   return (
@@ -125,14 +137,16 @@ const DefaultHome = () => {
               <div className="or-span">
                 <span>OR</span>
               </div>
-              <div className="align-items-center border ">
+              <div className="align-items-center border">
                 <input
                   type="text"
                   name="qr-reader"
                   placeholder="Enter Qr Code"
                   className="p-3 enter-search-qrarea"
                   value={qrCode}
-                  onChange={(e) => setQrCode(e.target.value)}
+                  onChange={handleQrCodeChange}
+                  onBlur={() => setQrCode((prev) => prev.trim())}
+                  maxLength={20}
                 />
               </div>
             </div>
