@@ -694,27 +694,6 @@ a {
   border-radius: 2px;
 }
 
-.customer-modal .modal-header {
-  background-color: #3f4c57;
-  color: white;
-}
-
-.customer-modal .modal-body {
-  padding: 1.5rem;
-}
-
-.customer-modal .btn {
-  background-color: #3d9be9;
-  border: none;
-}
-
-.customer-modal .btn-outline-secondary {
-  border: 1px solid #3f4c57;
-}
-
-.customer-modal .modal-backdrop {
-  z-index: 1050 !important;
-}
 @media screen and (max-width: 1199px) {
   h2 {
     font-size: 45px;

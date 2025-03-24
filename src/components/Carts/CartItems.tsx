@@ -1,30 +1,30 @@
 "use client";
 import axios from "axios";
-import React, { useRef, useState } from "react";
-import { useStripe, Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import React, { useState } from "react";
+// import { useStripe, Elements } from "@stripe/react-stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 import { useSelector, useDispatch } from "react-redux";
 import EmptyCart from "./EmptyCart";
 import "./cartItem.css";
 import { setLoading } from "@/redux/loadingSlice";
 import toast from "react-hot-toast";
 import { setCartData } from "@/redux/cartSlice";
-import Plans from "../Body/Plans/Plans";
+// import Plans from "../Body/Plans/Plans";
 import DeleteConfirmation from "../Common/DeleteConfirmation";
-import Image from "next/image";
+// import Image from "next/image";
 import { useRouter } from "next/navigation";
 import PlansModal from "../Body/Plans/PlansModal";
 import { FcInfo } from "react-icons/fc";
-import { IoIosArrowBack, IoMdArrowRoundBack } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
 import CustomerFormModel from "./CustomerFormModel";
+import { TIMEOUT } from "dns";
 
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string);
 interface FormData {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
-  phone: string;
 }
+
 const CartItems: React.FC = () => {
   const [modalShow, setModalShow] = useState<boolean>(false);
   const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null);
@@ -96,31 +96,33 @@ const CartItems: React.FC = () => {
     router.push(`/${currentSlug}`);
   };
 
-  const openPaymentFormModal = () => setIsPaymentFormOpen(true);
+  const openPaymentFormModal = () => setIsPaymentFormOpen(!isPaymentFormOpen);
   const closePaymentFormModal = () => setIsPaymentFormOpen(false);
 
   const handleFormSubmit = async (data: FormData) => {
-    console.log("Form submitted with data:", data);
-
     const paymentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/payments/create-checkout-session/`;
+    dispatch(setLoading(true));
 
     try {
-      console.log("Requesting checkout URL from:", paymentUrl);
-
-      const response = await axios.post(paymentUrl, {
-        qr_id: paymentId,
-        email: data.email,
-        first_name: data.firstName,
-        last_name: data.lastName,
-        phone_number: data.phone,
-      });
+      const response = await axios.post(
+        paymentUrl,
+        {
+          qr_id: paymentId,
+          email: data.email,
+          name: data.name,
+        },
+        {
+          timeout: 240000,
+        }
+      );
 
       const responseData = response.data;
       console.log("Response data:", responseData);
 
       if (responseData && responseData.checkout_url) {
         console.log("Redirecting to:", responseData.checkout_url);
-        window.open(responseData.checkout_url, "_blank");
+        router.push(responseData.checkout_url);
+        // window.open(responseData.checkout_url, "_blank");
       } else {
         console.error("No checkout URL in response:", responseData);
         toast.error("Payment initialization failed: No checkout URL received");
@@ -130,6 +132,8 @@ const CartItems: React.FC = () => {
       toast.error(error.response?.data?.message || error.message, {
         id: "gh",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -241,15 +245,15 @@ const CartItems: React.FC = () => {
                         CHECKOUT
                       </a>
                     </div>
-                    {isPaymentFormOpen && (
-                      <CustomerFormModel
-                        isOpen={isPaymentFormOpen}
-                        onClose={closePaymentFormModal}
-                        onSubmitSuccess={handleFormSubmit}
-                      />
-                    )}
                   </div>
                 </div>
+                {isPaymentFormOpen && (
+                  <CustomerFormModel
+                    isOpen={isPaymentFormOpen}
+                    onClose={closePaymentFormModal}
+                    onSubmitSuccess={handleFormSubmit}
+                  />
+                )}
               </div>
             </div>
           </section>

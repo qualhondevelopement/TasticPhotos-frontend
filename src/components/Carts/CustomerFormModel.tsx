@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { Modal, Button, Form, InputGroup, Row, Col } from "react-bootstrap";
+import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 
 interface CustomerFormModalProps {
   isOpen: boolean;
@@ -8,17 +8,13 @@ interface CustomerFormModalProps {
 }
 
 interface FormData {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
-  phone: string;
 }
 
 interface Errors {
-  firstName?: string;
-  lastName?: string;
+  name?: string;
   email?: string;
-  phone?: string;
 }
 
 const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
@@ -27,16 +23,22 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
   onSubmitSuccess,
 }) => {
   const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
-    phone: "",
   });
   const [errors, setErrors] = useState<Errors>({});
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    let updatedValue = value;
+
+    updatedValue = updatedValue.trimStart();
+
+    if (name === "name") {
+      updatedValue = updatedValue.replace(/[^a-zA-Z\s]/g, "");
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: updatedValue }));
 
     if (errors[name as keyof Errors]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
@@ -46,23 +48,19 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
   const validateForm = (): boolean => {
     const newErrors: Errors = {};
 
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = "First name is required";
-    }
+    // Trim the form data before validation
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
 
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = "Last name is required";
+    if (!trimmedName) {
+      newErrors.name = "Name is required";
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim()) {
+    if (!trimmedEmail) {
       newErrors.email = "Email is required";
-    } else if (!emailRegex.test(formData.email)) {
+    } else if (!emailRegex.test(trimmedEmail)) {
       newErrors.email = "Please enter a valid email address";
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
     }
 
     setErrors(newErrors);
@@ -77,7 +75,10 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
         await new Promise((resolve) => setTimeout(resolve, 1000));
         const submittedData = { ...formData };
 
-        setFormData({ firstName: "", lastName: "", email: "", phone: "" });
+        submittedData.name = submittedData.name.trim();
+        submittedData.email = submittedData.email.trim();
+
+        setFormData({ name: "", email: "" });
 
         if (onSubmitSuccess) {
           onSubmitSuccess(submittedData);
@@ -89,81 +90,50 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
   };
 
   const resetForm = () => {
-    setFormData({ firstName: "", lastName: "", email: "", phone: "" });
+    setFormData({ name: "", email: "" });
     setErrors({});
     onClose();
   };
 
   return (
     <Modal show={isOpen} onHide={resetForm} centered backdrop="static">
-      <Modal.Header className="customer-modal">
-        <Modal.Title>
-          <i className="bi bi-person-lines-fill me-2"></i>
-          Payment Information
-        </Modal.Title>
-        <Button
-          variant="link"
-          className="text-white p-0 ms-auto"
-          onClick={resetForm}
-        >
-          <i className="bi bi-x-lg"></i>
-        </Button>
+      <Modal.Header className="d-flex flex-column">
+        <div className="d-flex justify-content-between w-100">
+          <Modal.Title className="fs-4">Just One More Step! </Modal.Title>
+          <Button variant="close" onClick={onClose} aria-label="Close" />
+        </div>
+        <small className="text-muted text-start w-100">
+          Please enter your name and email to proceed to checkout.
+        </small>
       </Modal.Header>
 
       <Modal.Body className="p-4">
         <Form onSubmit={handleSubmit} noValidate>
-          <Row className="mb-3">
-            <Col md={6}>
-              <Form.Group controlId="firstName">
-                <Form.Label>First Name</Form.Label>
-                <InputGroup hasValidation>
-                  <InputGroup.Text>
-                    <i className="bi bi-person"></i>
-                  </InputGroup.Text>
-                  <Form.Control
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    placeholder="Enter first name"
-                    isInvalid={!!errors.firstName}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.firstName}
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-            </Col>
-
-            <Col md={6}>
-              <Form.Group controlId="lastName">
-                <Form.Label>Last Name</Form.Label>
-                <InputGroup hasValidation>
-                  <InputGroup.Text>
-                    <i className="bi bi-person-fill"></i>
-                  </InputGroup.Text>
-                  <Form.Control
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    placeholder="Enter last name"
-                    isInvalid={!!errors.lastName}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.lastName}
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-            </Col>
-          </Row>
-
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email Address</Form.Label>
+          <Form.Group controlId="name" className="">
+            <Form.Label className="mb-1 text-start w-100">Name</Form.Label>
             <InputGroup hasValidation>
-              <InputGroup.Text>
-                <i className="bi bi-envelope"></i>
-              </InputGroup.Text>
+              <Form.Control
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter name"
+                isInvalid={!!errors.name}
+                className="shadow-none"
+                maxLength={40}
+              />
+              <Form.Control.Feedback
+                type="invalid"
+                className="text-start w-100"
+              >
+                {errors.name}
+              </Form.Control.Feedback>
+            </InputGroup>
+          </Form.Group>
+
+          <Form.Group controlId="email" className="mt-3 ">
+            <Form.Label className="mb-1 text-start w-100">Email</Form.Label>
+            <InputGroup hasValidation>
               <Form.Control
                 type="email"
                 name="email"
@@ -171,37 +141,22 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
                 onChange={handleChange}
                 placeholder="name@example.com"
                 isInvalid={!!errors.email}
+                className="shadow-none"
+                maxLength={40}
               />
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback
+                type="invalid"
+                className="text-start w-100"
+              >
                 {errors.email}
               </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
 
-          <Form.Group className="mb-4" controlId="phone">
-            <Form.Label>Phone Number</Form.Label>
-            <InputGroup hasValidation>
-              <InputGroup.Text>
-                <i className="bi bi-telephone"></i>
-              </InputGroup.Text>
-              <Form.Control
-                type="tel"
-                name="phone"
-                maxLength={10}
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="+1 (555) 123-4567"
-                isInvalid={!!errors.phone}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.phone}
-              </Form.Control.Feedback>
-            </InputGroup>
-          </Form.Group>
-
-          <div className="d-flex justify-content-end gap-2">
-            <Button onClick={resetForm}>Cancel</Button>
-            <Button type="submit">Submit</Button>
+          <div className="d-flex justify-content-center mt-4">
+            <Button type="submit" className="custom-btn">
+              SUBMIT
+            </Button>
           </div>
         </Form>
       </Modal.Body>
