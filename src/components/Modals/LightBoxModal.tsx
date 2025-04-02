@@ -26,18 +26,17 @@ const LightBoxModal: React.FC<LightBoxModalProps> = ({
   return (
     <div className="pop-modal-overlay" onClick={onClose}>
       <button className="modal-close" onClick={onClose}>
-        {/* &times; */}
         <RxCross2 size={25} className="cross-modal-sign" />
       </button>
       <div
-        className="modal-dialog-custom slider-img-zoom"
+        className="modal-dialog-custom slider-img-zoom popup-pagination"
         onClick={(e) => e.stopPropagation()}
       >
         <Swiper
           modules={[Pagination, Navigation]}
           navigation={true}
-          pagination={{ clickable: true }}
-          initialSlide={initialIndex} // Set the initial slide
+          pagination={{ dynamicBullets: true }}
+          initialSlide={initialIndex}
         >
           {images.map((src, index) => (
             <SwiperSlide key={index}>
@@ -49,7 +48,6 @@ const LightBoxModal: React.FC<LightBoxModalProps> = ({
             </SwiperSlide>
           ))}
         </Swiper>
-        {/* <div classNameNameName="modal-caption">{caption}</div> */}
       </div>
     </div>
   );

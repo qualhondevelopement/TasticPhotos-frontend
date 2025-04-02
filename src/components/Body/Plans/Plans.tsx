@@ -72,7 +72,7 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
 
   return (
     <div>
-      <div className="row justify-content-center">
+      <div className="row justify-content-center plans-slider-main">
         <div className="col-md-12">
           <div className="heading-fonts text-center">
             <h2>Our Plans</h2>

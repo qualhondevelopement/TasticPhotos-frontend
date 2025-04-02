@@ -25,13 +25,13 @@ const Body: React.FC<BodyProps> = () => {
   const loading = useSelector((state: any) => state.loading);
   const id = useSelector((state: any) => state.slug.currentSlug);
   const allCartData = useSelector((state: any) => state.cart.cartData);
-
   // Use SWR to fetch location data
   const { data: locationName, error } = useSWR(
     id
       ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-gallery/?qr_id=${id}`
       : null,
-    fetcher
+    fetcher,
+    { revalidateOnFocus: false }
   );
 
   // console.log("locataion data", locationName);

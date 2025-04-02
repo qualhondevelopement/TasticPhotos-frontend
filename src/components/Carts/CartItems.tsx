@@ -176,7 +176,7 @@ const CartItems: React.FC = () => {
                               // blurDataURL="/images/img-1.webp"
                               // placeholder="blur"
                             />
-                            <div className="input12">
+                            <div className="input12 cart-cross">
                               <input
                                 type="checkbox"
                                 onClick={() => openModal(item.photo_id)}

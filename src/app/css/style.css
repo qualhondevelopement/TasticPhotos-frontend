@@ -649,7 +649,9 @@ a {
   max-width: 700px;
   border-radius: 5px;
   max-height: 80vh;
-  object-fit: cover;
+  object-fit: contain;
+  height: 510px;
+  background: #fff;
 }
 
 .modal-caption {
@@ -692,6 +694,16 @@ a {
   background: #fff;
   padding: 0px 5px;
   border-radius: 2px;
+}
+.popup-pagination .swiper-pagination {
+  bottom: 10px !important;
+}
+.cart-cross input {
+  width: 40px !important;
+  height: 40px !important;
+  right: 0 !important;
+  left: auto !important;
+  position: absolute !important;
 }
 
 @media screen and (max-width: 1199px) {
@@ -800,6 +812,16 @@ a {
   .find-photo-section {
     margin-top: 30px;
   }
+  .modal-image {
+    height: 330px;
+  }
+  .slider-img-zoom .swiper {
+    padding: 0px 0px;
+  }
+  .plans-slider-main .swiper {
+    padding: 0;
+    max-width: 95%;
+  }
 }
 
 @media screen and (max-width: 575px) {
@@ -873,6 +895,9 @@ a {
   }
   .qrcode-outer {
     flex-direction: column;
+  }
+  .modal-image {
+    height: 220px;
   }
 }
 .slick-prev:hover:before,
