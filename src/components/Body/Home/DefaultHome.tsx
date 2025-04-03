@@ -141,7 +141,7 @@ const DefaultHome = () => {
                 <input
                   type="text"
                   name="qr-reader"
-                  placeholder="Enter Qr Code"
+                  placeholder="Enter QR code"
                   className="p-3 enter-search-qrarea"
                   value={qrCode}
                   onChange={handleQrCodeChange}

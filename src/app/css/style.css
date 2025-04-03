@@ -63,6 +63,11 @@
   box-sizing: border-box;
 }
 
+::placeholder {
+  color: rgba(0, 0, 0, 0.4); /* Adjust the opacity as needed */
+  font-weight: 300; /* Make it lighter */
+}
+
 body {
   font-family: "DIN Next W1G";
   font-size: 18px;

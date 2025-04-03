@@ -213,7 +213,11 @@ const Body: React.FC<BodyProps> = () => {
                   </div>
                 </div>
               </div>
-            ) : null}
+            ) : (
+              <h4 className="text-center text-muted">
+                No images available in QR.
+              </h4>
+            )}
 
             {!loading &&
               locationName?.map((locationData: any, index: any) => (

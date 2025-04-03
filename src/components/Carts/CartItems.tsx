@@ -17,7 +17,6 @@ import PlansModal from "../Body/Plans/PlansModal";
 import { FcInfo } from "react-icons/fc";
 import { IoIosArrowBack } from "react-icons/io";
 import CustomerFormModel from "./CustomerFormModel";
-import { TIMEOUT } from "dns";
 
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string);
 interface FormData {
@@ -117,12 +116,10 @@ const CartItems: React.FC = () => {
       );
 
       const responseData = response.data;
-      console.log("Response data:", responseData);
 
       if (responseData && responseData.checkout_url) {
         console.log("Redirecting to:", responseData.checkout_url);
         router.push(responseData.checkout_url);
-        // window.open(responseData.checkout_url, "_blank");
       } else {
         console.error("No checkout URL in response:", responseData);
         toast.error("Payment initialization failed: No checkout URL received");
@@ -133,7 +130,8 @@ const CartItems: React.FC = () => {
         id: "gh",
       });
     } finally {
-      setLoading(false);
+      dispatch(setLoading(false));
+      setIsPaymentFormOpen(false);
     }
   };
 
