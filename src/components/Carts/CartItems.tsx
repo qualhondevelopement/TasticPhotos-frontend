@@ -75,7 +75,6 @@ const CartItems: React.FC = () => {
         photo_id: photoId,
         operation: "remove",
       });
-      dispatch(setLoading(false));
 
       toast.success("Cart updated successfully");
 
@@ -84,6 +83,7 @@ const CartItems: React.FC = () => {
     } catch (error: any) {
       console.error("Error removing item from cart:", error);
       setModalShow(false);
+    } finally {
       dispatch(setLoading(false));
     }
   };
@@ -91,6 +91,7 @@ const CartItems: React.FC = () => {
     setSelectedPhotoId(photoId);
     setModalShow(true);
   };
+
   const handleGoBack = () => {
     router.push(`/${currentSlug}`);
   };

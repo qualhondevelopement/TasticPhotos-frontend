@@ -46,7 +46,7 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
   }, []);
 
   const renderPlan = (plan: Plan) => (
-    <div className="price-box text-center" key={plan.id}>
+    <div className="price-box text-center" key={plan.id} >
       <div className="price-title-center">
         <h4>{plan.plan_name}</h4>
         <h2 className="price-main">
@@ -72,7 +72,7 @@ const Plans: React.FC<PlansProps> = ({ handleScroll }) => {
 
   return (
     <div>
-      <div className="row justify-content-center plans-slider-main">
+      <div className="row justify-content-center plans-slider-main" >
         <div className="col-md-12">
           <div className="heading-fonts text-center">
             <h2>Our Plans</h2>

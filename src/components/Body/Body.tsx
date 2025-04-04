@@ -16,57 +16,74 @@ interface BodyProps {}
 const fetcher = (url: string) => axios.get(url).then((res) => res.data.data);
 
 const Body: React.FC<BodyProps> = () => {
+  // const previousError = useRef<string | null>(null);
+  // const loading = useSelector((state: any) => state.loading);
   const scrollTargetRef = useRef<HTMLDivElement>(null);
-  const previousError = useRef<string | null>(null);
   const dispatch = useDispatch();
   const router = useRouter();
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [allImageChecked, setAllImageChecked] = useState<boolean>(false);
-  const loading = useSelector((state: any) => state.loading);
   const id = useSelector((state: any) => state.slug.currentSlug);
   const allCartData = useSelector((state: any) => state.cart.cartData);
   // Use SWR to fetch location data
-  const { data: locationName, error } = useSWR(
+  const {
+    data: locationName,
+    error,
+    isLoading,
+  } = useSWR(
     id
       ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-gallery/?qr_id=${id}`
       : null,
     fetcher,
     { revalidateOnFocus: false }
   );
-
-  // console.log("locataion data", locationName);
-  useEffect(() => {
-    // console.log("here");
-    if (!locationName) return;
-    const totalEntries = locationName.reduce(
-      (count: any, item: any) => count + Object.keys(item.data).length,
-      0
-    );
-    // console.log(totalEntries, "cart data");
-    // console.log(selectedImages.length, "selected images");
-    if (selectedImages.length == totalEntries) {
-      setAllImageChecked(true);
-    } else {
-      setAllImageChecked(false);
-    }
-  }, [locationName, selectedImages]);
+  // const isLoading = !locationName && !error;
 
   useEffect(() => {
     if (error) {
-      const errorMessage = error.response?.data?.message;
-
-      // Show toast if it's a new error message
-      if (errorMessage && previousError.current !== errorMessage) {
-        previousError.current = errorMessage;
-        // toast.error(errorMessage, {
-        //   id: `gallery-error-${errorMessage}`,
-        // });
-        router.push("/");
-      }
-    } else {
-      previousError.current = null;
+      router.push("/");
+      toast.error("Invalid QR code", { id: "error-toast" });
     }
   }, [error, router]);
+
+  useEffect(() => {
+    if (allCartData?.photos) {
+      setSelectedImages(allCartData.photos.map((photo: any) => photo.photo_id));
+    }
+  }, [allCartData]);
+
+  // useEffect(() => {
+  //   // console.log("here");
+  //   if (!locationName) return;
+  //   const totalEntries = locationName.reduce(
+  //     (count: any, item: any) => count + Object.keys(item.data).length,
+  //     0
+  //   );
+  //   // console.log(totalEntries, "cart data");
+  //   // console.log(selectedImages.length, "selected images");
+  //   if (selectedImages.length == totalEntries) {
+  //     setAllImageChecked(true);
+  //   } else {
+  //     setAllImageChecked(false);
+  //   }
+  // }, [locationName, selectedImages]);
+
+  // useEffect(() => {
+  //   if (error) {
+  //     const errorMessage = error.response?.data?.message;
+
+  //     // Show toast if it's a new error message
+  //     if (errorMessage && previousError.current !== errorMessage) {
+  //       previousError.current = errorMessage;
+  //       // toast.error(errorMessage, {
+  //       //   id: `gallery-error-${errorMessage}`,
+  //       // });
+  //       router.push("/");
+  //     }
+  //   } else {
+  //     previousError.current = null;
+  //   }
+  // }, [error, router]);
 
   useEffect(() => {
     if (allCartData?.photos) {
@@ -85,16 +102,29 @@ const Body: React.FC<BodyProps> = () => {
     );
   };
 
+  // const handleSelectAll = (isChecked: boolean) => {
+  //   if (isChecked) {
+  //     const allImageIds = locationName.flatMap((loc: { data: any }) =>
+  //       Object.keys(loc.data)
+  //     );
+  //     setSelectedImages(allImageIds);
+  //     setAllImageChecked(true);
+  //     toast.success("All Images Selected", {
+  //       id: "4",
+  //     });
+  //   } else {
+  //     setSelectedImages([]);
+  //     setAllImageChecked(false);
+  //   }
+  // };
+
   const handleSelectAll = (isChecked: boolean) => {
+    const allIds =
+      locationName?.flatMap((loc: any) => Object.keys(loc.data)) || [];
+    setSelectedImages(isChecked ? allIds : []);
     if (isChecked) {
-      const allImageIds = locationName.flatMap((loc: { data: any }) =>
-        Object.keys(loc.data)
-      );
-      setSelectedImages(allImageIds);
       setAllImageChecked(true);
-      toast.success("All Images Selected", {
-        id: "4",
-      });
+      toast.success("All images selected");
     } else {
       setSelectedImages([]);
       setAllImageChecked(false);
@@ -102,10 +132,8 @@ const Body: React.FC<BodyProps> = () => {
   };
 
   const handleAddCart = async () => {
-    if (selectedImages.length === 0) {
-      toast.error("No images selected", {
-        id: "3",
-      });
+    if (!selectedImages.length) {
+      toast.error("Select images first");
       return;
     }
 
@@ -172,9 +200,11 @@ const Body: React.FC<BodyProps> = () => {
 
           <hr className="line-grey" />
           <div className="row" ref={scrollTargetRef}>
-            {locationName &&
-            locationName !== "undefined" &&
-            locationName.length != 0 ? (
+            {isLoading ? (
+              <h4 className="text-center text-muted">Loading images...</h4>
+            ) : locationName &&
+              locationName !== "undefined" &&
+              locationName.length != 0 ? (
               <div className="col-md-12">
                 <div className="cart-btn-outer mb-3">
                   {selectedImages.length > 0 && (
@@ -219,7 +249,7 @@ const Body: React.FC<BodyProps> = () => {
               </h4>
             )}
 
-            {!loading &&
+            {!isLoading &&
               locationName?.map((locationData: any, index: any) => (
                 <div>
                   <ImageCard

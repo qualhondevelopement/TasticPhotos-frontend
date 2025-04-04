@@ -4,7 +4,7 @@ import { setCartData } from "@/redux/cartSlice";
 import { setLoading } from "@/redux/loadingSlice";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FiUpload } from "react-icons/fi";
 import { IoIosClose } from "react-icons/io";
@@ -13,19 +13,28 @@ import { useSelector } from "react-redux";
 
 const DefaultHome = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [imageName, setImageName] = useState("Click to Upload Image");
   const [image, setImage] = useState(false);
-  const loading = useSelector((state: any) => state.loading);
-  const dispatch = useDispatch();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [errorMssg, setErrorMssg] = useState(null);
   const [qrCode, setQrCode] = useState("");
+
+  const loading = useSelector((state: any) => state.loading);
+
+  // Cleanup loading state on unmount
+  useEffect(() => {
+    return () => {
+      dispatch(setLoading(false));
+    };
+  }, [dispatch]);
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setImageFile(file);
-
+      setErrorMssg(null);
       setImageName(file.name);
       setImage(true);
     }
@@ -52,8 +61,18 @@ const DefaultHome = () => {
       return;
     }
 
-    if (imageFile) {
-      try {
+    if (!imageFile && !qrCode.trim()) {
+      toast.error("Please upload an image or enter a QR code.", {
+        id: "search-error",
+      });
+      return;
+    }
+
+    dispatch(setCartData(null));
+    setErrorMssg(null);
+
+    try {
+      if (imageFile) {
         dispatch(setLoading(true));
         const formData = new FormData();
         formData.append("image", imageFile);
@@ -62,44 +81,38 @@ const DefaultHome = () => {
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/find-gallery-by-face/`,
           formData
         );
+
         if (response.data.success) {
-          dispatch(setLoading(false));
-          dispatch(setCartData(null));
-          console.log(response);
           router.push(response.data.url);
         }
-
-        // console.log("Response:", response.data);
-      } catch (error: any) {
-        dispatch(setLoading(false));
-        setErrorMssg(error.response.data.error);
-        // toast.error(error.response.data.error);
-        console.error("Error uploading image:", error.response.data.error);
-      }
-    } else if (qrCode.trim()) {
-      try {
+      } else if (qrCode.trim()) {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-gallery/?qr_id=${qrCode}`
         );
-        dispatch(setCartData(null));
+
         router.push(`/${qrCode}`);
-      } catch (error: any) {
-        setErrorMssg(error.response?.data?.message || "QR code not found.");
-        console.error("Error fetching gallery:", error.response?.data?.error);
       }
-    } else {
-      toast.error("Please upload an image or enter a QR code.", {
-        id: "search-error",
-      });
+    } catch (error: any) {
+      setErrorMssg(error.response?.data?.message || "An error occurred.");
+      console.error("Search error:", error.response?.data?.error || error);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
+
   const handleQrCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQrCode(e.target.value.trim());
+    setErrorMssg(null);
   };
-
+  // {
+  //   await axios.get(
+  //     `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-gallery/?qr_id=${qrCode}`
+  //   );
+  //   router.push(`/${qrCode}`);
+  // }
   return (
     <div>
-      {loading === false && (
+      {!loading && (
         <div className="container mt-5 d-flex justify-content-center ">
           <div className="align-items-center text-center mb-4 parent-div-home-qr">
             <div className="d-flex gap-3 align-items-center qrcode-outer">

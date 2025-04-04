@@ -28,7 +28,7 @@ const Banner = () => {
 
   return (
     <section className="banner-sec">
-      {isloading ? (
+      {loading ? (
         <div className="skeleton"></div>
       ) : (
         // <Loader />
