@@ -93,7 +93,11 @@ const DefaultHome = () => {
         router.push(`/${qrCode}`);
       }
     } catch (error: any) {
-      setErrorMssg(error.response?.data?.message || "An error occurred.");
+      setErrorMssg(
+        error.response?.data?.message ||
+          error.response.data.error ||
+          "An error occurred."
+      );
       console.error("Search error:", error.response?.data?.error || error);
     } finally {
       dispatch(setLoading(false));

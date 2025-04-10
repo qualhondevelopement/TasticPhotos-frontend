@@ -33,8 +33,9 @@ const PaymentSuccess = () => {
           // console.log(response.data);
           setZipUrl(response.data.zip_url);
         } catch (err: any) {
+          router.push(`/cart-items/${id}`);
           console.log(err);
-          toast.error(err.response.data.error);
+          // toast.error(err.response.data.error);
         } finally {
           setLoading(false);
         }
