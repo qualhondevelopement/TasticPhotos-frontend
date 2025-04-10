@@ -141,8 +141,8 @@ h4 {
 }
 .locations-sec {
   padding: 70px 0px;
-  background: url(../../../public/images/ground.png) 0 0 no-repeat;
-  background-size: cover;
+  background: url(../../../public/images/ground.png) 0 0;
+  /* background-size: cover; */
 }
 .hr-line {
   max-width: 70px;
