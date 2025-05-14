@@ -52,43 +52,19 @@ const Body: React.FC<BodyProps> = () => {
     }
   }, [allCartData]);
 
-  // useEffect(() => {
-  //   // console.log("here");
-  //   if (!locationName) return;
-  //   const totalEntries = locationName.reduce(
-  //     (count: any, item: any) => count + Object.keys(item.data).length,
-  //     0
-  //   );
-  //   // console.log(totalEntries, "cart data");
-  //   // console.log(selectedImages.length, "selected images");
-  //   if (selectedImages.length == totalEntries) {
-  //     setAllImageChecked(true);
-  //   } else {
-  //     setAllImageChecked(false);
-  //   }
-  // }, [locationName, selectedImages]);
-
-  // useEffect(() => {
-  //   if (error) {
-  //     const errorMessage = error.response?.data?.message;
-
-  //     // Show toast if it's a new error message
-  //     if (errorMessage && previousError.current !== errorMessage) {
-  //       previousError.current = errorMessage;
-  //       // toast.error(errorMessage, {
-  //       //   id: `gallery-error-${errorMessage}`,
-  //       // });
-  //       router.push("/");
-  //     }
-  //   } else {
-  //     previousError.current = null;
-  //   }
-  // }, [error, router]);
-
   useEffect(() => {
     if (allCartData?.photos) {
       const imageIds = allCartData.photos.map((photo: any) => photo.photo_id);
       setSelectedImages(imageIds);
+      if (locationName) {
+        const allImageIds = locationName.flatMap((loc: any) =>
+          Object.keys(loc.data)
+        );
+        const isAllSelected =
+          allImageIds.length > 0 &&
+          allImageIds.every((id: any) => imageIds.includes(id));
+        setAllImageChecked(isAllSelected);
+      }
     }
   }, [allCartData]);
 
@@ -97,9 +73,22 @@ const Body: React.FC<BodyProps> = () => {
   };
 
   const handleSelectImage = (imageId: string, isChecked: boolean) => {
-    setSelectedImages((prev) =>
-      isChecked ? [...prev, imageId] : prev.filter((id) => id !== imageId)
-    );
+    const newSelectedImages = isChecked
+      ? [...selectedImages, imageId]
+      : selectedImages.filter((id) => id !== imageId);
+
+    setSelectedImages(newSelectedImages);
+
+    // Check if all images are now selected
+    if (locationName) {
+      const allImageIds = locationName.flatMap((loc: any) =>
+        Object.keys(loc.data)
+      );
+      const isAllSelected =
+        allImageIds.length > 0 &&
+        allImageIds.every((id: any) => newSelectedImages.includes(id));
+      setAllImageChecked(isAllSelected);
+    }
   };
 
   // const handleSelectAll = (isChecked: boolean) => {
